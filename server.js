@@ -1,9 +1,26 @@
-const fs = require('fs')
-let words = []
+(async () => {
+    // imports 
+    const express = require('express')
+    const morgan = require('morgan')
+    const bodyParser = require('body-parser')
+    const path = require('path')
+    require('dotenv').config()
 
-// reading words from txt file and splitting them from new line
-const buffer = fs.readFileSync('./kelime-listesi.txt')
-let allWords = buffer.toString().split(/\s/g)
-allWords.forEach(word => words.push(word))
+    const userRouter = require('./routes/userRoutes')
 
-// console.log(words.length)
+    const app = express()
+    const PORT = process.env.PORT || 3000
+
+    // setting ejs as the templating language
+    app.set('view engine', 'ejs')
+    
+    // middlewares
+    app.use(express.json())
+    app.use(express.static(path.join(__dirname, 'public')))
+    app.use(morgan('dev'))
+    app.use(bodyParser.json())
+    app.use(bodyParser.urlencoded({ extended: false }))
+    app.use('/user', userRouter)
+
+    app.listen(PORT, () => console.log(`server listening on port: ${PORT}`))
+})()
