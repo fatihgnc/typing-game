@@ -12,21 +12,21 @@ class MySQL {
             }
         })
         this.dataTypes = dataTypes
-        this.connected = true
     }
 
     /**
      * Function to check whether the connection to database established successfully.
      * 
+     * @returns - true if connected, otherwise false.
      */
     async checkConnection () {
         try {
             await this.sequelize.authenticate()
-            this.connected = true
             console.log(chalk.greenBright('connected to db successfully'))
+            return true
         } catch (e) {
             console.log(chalk.red(e))
-            this.connected = false
+            return false
         }
     }
 
