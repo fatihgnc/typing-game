@@ -4,9 +4,10 @@
     const morgan = require('morgan')
     const bodyParser = require('body-parser')
     const path = require('path')
-    require('dotenv').config()
+    await require('dotenv').config()
 
     const userRouter = require('./routes/userRoutes')
+    const gameRouter = require('./routes/gameRoutes')
 
     const app = express()
     const PORT = process.env.PORT || 3000
@@ -20,6 +21,7 @@
     app.use(morgan('dev'))
     app.use(bodyParser.json())
     app.use(bodyParser.urlencoded({ extended: false }))
+    app.use('/', gameRouter)
     app.use('/user', userRouter)
 
     app.listen(PORT, () => console.log(`server listening on port: ${PORT}`))
