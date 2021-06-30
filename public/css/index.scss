@@ -1,0 +1,149 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;800&display=swap');
+
+*,
+*::before,
+*::after {
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+    background-color: #cacaca;
+}
+
+.container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 3em;
+
+    // cta start
+    .cta-header {
+        font-size: 4rem;
+        font-weight: 400;
+        letter-spacing: 3px;
+        text-align: center;
+
+        &::after {
+            content: "|";
+            animation: blink 500ms linear infinite alternate;
+        }
+
+        @keyframes blink {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+    }
+
+    .cta-btn {
+        position: relative;
+        width: 30%;
+        margin: 0 auto;
+        padding: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        color: black;
+        border: thin solid black;
+        font-size: 1.4rem;
+        font-weight: 300;
+        cursor: pointer;
+        transition: all .2s ease;
+
+        .play-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+
+            svg {
+                fill: black;
+                transition: fill .2s ease;
+            }
+        }
+
+        &:hover {
+            background: black;
+            color: white;
+        }
+
+        &:hover svg {
+            fill: white;
+        }
+
+    }
+
+    @media screen and (max-width: 1200px) {
+        .cta-header {
+            font-size: 3rem;
+        }
+    }
+
+    @media screen and (max-width: 750px) {
+
+        .cta-header {
+            font-size: 2rem;
+        }
+
+        .cta-btn {
+            padding: .75rem;
+            width: 70%;
+        }
+    }
+
+    // cta end
+
+    // registration start
+    .registration {
+        margin: 0 auto;
+        padding: 2rem;
+        display: none;
+        transition: all .5s ease;
+
+        #username {
+            padding: 1em;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+        }
+
+        #submit {
+            border: none;
+            padding: 1rem;
+            background: gray;
+            font-size: 1rem;
+            color: white;
+            cursor: pointer;
+            transition: background .2s ease-in-out;
+
+            &:hover {
+                background: #545454;
+            }
+
+        }
+    }
+    // registration end
+}
+
+// for cursor effect
+@keyframes blinkTextCursor {
+    from {
+        border-right-color: rgba(0, 0, 0, .75);
+    }
+
+    to {
+        border-right-color: transparent;
+    }
+}

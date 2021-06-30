@@ -1,15 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-<link rel="stylesheet" href="/css/index.scss">
+<link rel="stylesheet" href="/css/index.css">
 <%- include('./partials/head.ejs') %>
 
     <body>
 
         <div class="container">
-            <h1 class="game-header">How fast can you type?</h1>
-            <button class="cta">Let me see</button>
+
+            <!-- cta start -->
+            <h1 class="cta-header anim-typewriter"></h1>
+
+            <button class="cta-btn">
+                <p class="play-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M3 22v-20l18 10-18 10z"/></svg>
+                </p>
+                Let me see
+            </button>
+            <!-- cta end -->
+
+            <!-- registry start -->
+            <div class="registration">
+                <input type="text" name="username" id="username" placeholder="Enter your username...">
+                <button type="submit" id="submit">Let's go</button>
+            </div>
+            <!-- registry end -->
+
+            <%- include('./partials/footer.ejs') %>
         </div>
 
     </body>
+
+    <script>
+        $(function () {
+            const $ctaHeader = $('.cta-header')
+            const $ctaButton = $('.cta-btn')
+            const $registrationForm = $('.registration')
+
+            const headerToDisplay = 'How fast can you type?'.split('')
+
+            function animation(header) {
+                let i = 0
+                setInterval(() => {
+                    $ctaHeader.append(header[i])
+                    i++
+
+                    if (i > header.length) {
+                        setTimeout(() => {
+                            $ctaHeader.empty()
+                            i = 0
+                        }, 2000)
+                    }
+
+                }, 250)
+            }
+
+            animation(headerToDisplay)
+
+            $ctaButton.on('click', e => {
+                e.preventDefault()
+
+                $registrationForm.css('display', 'block')
+            })
+        })
+    </script>
 
 </html>
