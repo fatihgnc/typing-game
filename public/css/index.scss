@@ -48,16 +48,17 @@ body {
 
     .cta-btn {
         position: relative;
-        width: 30%;
+        width: 25%;
         margin: 0 auto;
         padding: 1.5rem;
         display: flex;
         align-items: center;
         justify-content: center;
-        background: transparent;
-        color: black;
-        border: thin solid black;
-        font-size: 1.4rem;
+        color: white;
+        background: gray;
+        border: none;
+        letter-spacing: 1.5px;
+        font-size: 1.3rem;
         font-weight: 300;
         cursor: pointer;
         transition: all .2s ease;
@@ -69,20 +70,13 @@ body {
             margin-right: 1rem;
 
             svg {
-                fill: black;
-                transition: fill .2s ease;
+                fill: white;
             }
         }
 
         &:hover {
-            background: black;
-            color: white;
+            background: #545454;
         }
-
-        &:hover svg {
-            fill: white;
-        }
-
     }
 
     @media screen and (max-width: 1200px) {
@@ -99,7 +93,7 @@ body {
 
         .cta-btn {
             padding: .75rem;
-            width: 70%;
+            width: 40%;
         }
     }
 
