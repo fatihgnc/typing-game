@@ -17,16 +17,14 @@ class MySQL {
     /**
      * Function to check whether the connection to database established successfully.
      * 
-     * @returns - true if connected, otherwise false.
+     * @returns status message, success/fail.
      */
     async checkConnection () {
         try {
             await this.sequelize.authenticate()
             console.log(chalk.greenBright('connected to db successfully'))
-            return true
         } catch (e) {
             console.log(chalk.red(e))
-            return false
         }
     }
 

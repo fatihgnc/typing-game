@@ -12,7 +12,13 @@ module.exports = async (sequelize, DataTypes) => {
         username: {
             type: DataTypes.STRING,
             allowNull: false,
-            unique: !0
+            unique: !0,
+            validate: {
+                len: {
+                    args: [3, 15],
+                    msg: 'Username must be between 3-12 characters!'
+                }
+            }
         },
         points: {
             type: DataTypes.INTEGER,

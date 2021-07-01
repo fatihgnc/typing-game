@@ -17,13 +17,22 @@ body {
     background-color: #cacaca;
 }
 
+.redirect-msg {
+    padding: .75em;
+    text-align: center;
+    text-decoration: underline;
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin: 0 auto;
+}
+
 .container {
     width: 100%;
     display: flex;
     flex-direction: column;
     gap: 3em;
 
-    // cta start
+    // ---cta start---
     .cta-header {
         font-size: 4rem;
         font-weight: 400;
@@ -48,9 +57,9 @@ body {
 
     .cta-btn {
         position: relative;
-        width: 25%;
+        width: 15%;
         margin: 0 auto;
-        padding: 1.5rem;
+        padding: 1rem;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -63,7 +72,7 @@ body {
         cursor: pointer;
         transition: all .2s ease;
 
-        .play-icon {
+        .cta-btn__play-icon {
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -76,6 +85,13 @@ body {
 
         &:hover {
             background: #545454;
+        }
+    }
+
+    // medias for cta
+    @media screen and (max-width: 1450px) {
+        .cta-btn {
+            width: 25%;
         }
     }
 
@@ -93,27 +109,29 @@ body {
 
         .cta-btn {
             padding: .75rem;
-            width: 40%;
+            width: 60%;
         }
+
     }
 
-    // cta end
+    // ---cta end---
 
-    // registration start
+    // ---registration start---
     .registration {
         margin: 0 auto;
-        padding: 2rem;
+        padding: 1rem;
         display: none;
+        text-align: center;
         transition: all .5s ease;
 
-        #username {
+        #registration__username {
             padding: 1em;
             border: none;
             outline: none;
             font-size: 1rem;
         }
 
-        #submit {
+        #registration__submit {
             border: none;
             padding: 1rem;
             background: gray;
@@ -125,13 +143,35 @@ body {
             &:hover {
                 background: #545454;
             }
+        }
 
+        .registration__status-msg {
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            width: 100%;
+            opacity: 0;
+            margin: 0 auto;
+            padding: 1rem;
+            color: white;
+            transition: opacity .2s ease-in-out;
         }
     }
-    // registration end
+    // ---registration end---
+
+    // ---registration media---
+    @media screen and (max-width: 750px) {
+        .registration * {
+            width: 100%;
+        }
+
+        .registration #registration__submit {
+            margin-top: .5rem;
+        }
+    }
 }
 
-// for cursor effect
+// ---for cursor effect---
 @keyframes blinkTextCursor {
     from {
         border-right-color: rgba(0, 0, 0, .75);

@@ -6,14 +6,14 @@
     const User = await require('../models/User')(db.sequelize, DataTypes)
 
     exports.insertUser = async (req, res) => {
-        console.log('out try')
+        // console.log('out try')
         try {
-            console.log('in try')
+            // console.log('in try')
             const user = await db.insertRecord(User, { ...req.body })
-            console.log('done');
+            // console.log('done');
             res.status(201).send(user)
         } catch (err) {
-            res.status(500).send(err)
+            res.status(400).send(err.errors[0].message)
         }
     }
 })()
