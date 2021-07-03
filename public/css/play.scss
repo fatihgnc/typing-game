@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;800&display=swap');
+
+*,
+*::before,
+*::after {
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+    background-color: #cacaca;
+}
+
+.container {
+    width: max-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    padding: 5rem 2rem;
+    background: rgba(255,255,255,.25);
+
+    * {
+        text-align: center;
+        width: 70%;
+    }
+
+    .timer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 75px;
+        height: 75px;
+        border: thin solid black;
+        border-radius: 50%;
+        font-size: 1.2rem;
+    }
+
+    .target-words {
+        padding: 1rem;
+        width: max-content;
+        word-spacing: 5px;
+        font-size: 1.2rem;
+    }
+
+    #wordInput {
+        max-width: 200px;
+        padding: .5rem;
+        outline: none;
+        border: none;
+        font-size: 1rem;
+    }
+
+    .score {
+        font-weight: 600;
+    }
+
+    .scoreboard {
+        border: thin solid black;
+        width: max-content;
+        padding: .5rem 1rem;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all .2s ease;
+    
+        &:hover {
+            background-color: black;
+            color: white;
+        }
+    }
+    
+}
+
+.current-target {
+    background: rgba(#343434, .25);
+    padding: .25rem;
+}
+
+@media screen and (max-width: 700px) {
+    .container {
+        width: 75%;
+    }
+
+    .container * {
+        width: 100%;
+    }
+}
