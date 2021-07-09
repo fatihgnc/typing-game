@@ -6,7 +6,7 @@ const fs = require('fs')
  * @returns - All words in a mixed way.
  */
 
-const readWordsFromFile = (path) => {
+const getWordsFromFile = (path) => {
     // reading words from txt file and splitting them from new line
     let plainWords = []
     const buffer = fs.readFileSync(path)
@@ -23,6 +23,4 @@ const readWordsFromFile = (path) => {
     return shuffledWords
 }
 
-module.exports = {
-    readWordsFromFile
-}
+module.exports = { getWordsFromFile }

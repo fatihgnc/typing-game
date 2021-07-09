@@ -4,8 +4,8 @@
     const morgan = require('morgan')
     const bodyParser = require('body-parser')
     const path = require('path')
-    await require('dotenv').config()
-
+    require('dotenv').config()
+    
     const userRouter = require('./routes/userRoutes')
     const gameRouter = require('./routes/gameRoutes')
 

@@ -7,6 +7,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    color: white;
 }
 
 body {
@@ -14,7 +15,7 @@ body {
     place-items: center;
     min-height: 100vh;
     overflow: hidden;
-    background-color: #cacaca;
+    background-color: #242424;
 }
 
 .redirect-msg {
@@ -26,6 +27,7 @@ body {
     margin: 0 auto;
 }
 
+// =========container==========
 .container {
     width: 100%;
     display: flex;
@@ -63,7 +65,6 @@ body {
         display: flex;
         align-items: center;
         justify-content: center;
-        color: white;
         background: gray;
         border: none;
         letter-spacing: 1.5px;
@@ -87,6 +88,7 @@ body {
             background: #545454;
         }
     }
+    // =========container end===========
 
     // medias for cta
     @media screen and (max-width: 1450px) {
@@ -129,6 +131,7 @@ body {
             border: none;
             outline: none;
             font-size: 1rem;
+            color: #242424;
         }
 
         #registration__submit {
@@ -136,7 +139,6 @@ body {
             padding: 1rem;
             background: gray;
             font-size: 1rem;
-            color: white;
             cursor: pointer;
             transition: background .2s ease-in-out;
 
@@ -146,11 +148,10 @@ body {
         }
 
         .registration__status-msg {
-            min-width: max-content;
+            max-width: 330px;
             opacity: 0;
             margin-top: 1rem;
             padding: 1rem;
-            color: white;
             transition: opacity .2s ease-in-out;
         }
     }
@@ -159,11 +160,15 @@ body {
     // ---registration media---
     @media screen and (max-width: 750px) {
         .registration .registration__status-msg {
-            width: 100%;
+            max-width: 230px;
+            text-align: center;
+            margin: .5rem auto 0;
         }
 
         .registration #registration__submit {
             margin-top: .5rem;
+            width: 100%;
+            max-width: 230px;
         }
     }
 }

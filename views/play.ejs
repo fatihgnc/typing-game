@@ -8,92 +8,17 @@
             <p class="timer">60</p>
             <span class="target-words"></span>
             <input type="text" id="wordInput" placeholder="enter here">
-            <span class="score">Score: 15</span>
-            <span class="scoreboard">Go to Scoreboard</span>
+            <div class="game-over-container">
+                <div class="game-over__success-rate"></div>
+                <div class="game-over__buttons">
+                    <span class="scoreboard">Scoreboard</span>
+                    <span class="play-again">Play Again</span>
+                </div>
+            </div>
 
             <%- include('./partials/footer.ejs') %>
         </div>
     </body>
 
-    <script>
-        $(function () {
-            const wordSpan = $('.target-words')
-            const wordInput = $('#wordInput')
-            const words = getWords()
-            let wordIndex = 0
-            let currentWordIndex = 0
-            const timer = $('.timer')
-            let correctCount = 0
-
-            function getWords() {
-                let wordsToFetch = []
-
-                $.ajax({
-                    url: '/getWords',
-                    success: (data, status, jqxhr) => {
-                        wordsToFetch = data.filter(piece => piece.length <= 8)
-                    },
-                    error: (jqxhr, status, err) => {
-                        alert(jqxhr.responseText)
-                    },
-                    async: false
-                })
-
-                return wordsToFetch
-            }
-
-            function loadNextWords() {
-                wordSpan.empty()
-                
-                const nextWords = [words[wordIndex], words[wordIndex + 1], words[wordIndex + 2], words[wordIndex + 3]]
-                wordInput.val('')
-
-                nextWords.forEach((word, index) => {
-                    if(index === 0) {
-                        wordSpan.append(`<span class="current-target">${word}</span> `)
-                    } else {
-                        wordSpan.append(`<span>${word}</span> `)
-                    }
-                })
-
-                wordIndex += 4
-            }
-            
-            
-            function startTimer() {
-                let timeLeft = 60
-                timer.text(timeLeft)
-                
-                const timeInterval = setInterval(() => {
-                    timer.text(--timeLeft)
-                    checkTimer(timeInterval, timeLeft)
-                }, 1000)
-            }
-            
-            function checkTimer(interval, remainingTime) {
-                if (remainingTime <= 0) {
-                    clearInterval(interval)
-                    wordInput.prop('readonly', true)
-                }
-            }
-            
-            wordInput.one('keyup', startTimer)
-            
-            wordInput.on('keyup', e => {
-                if (e.keyCode === 32 && currentWordIndex === 3) {
-                    loadNextWords()
-                    currentWordIndex = 0
-                } else if (e.keyCode === 32) {
-                    wordInput.val('')
-                    wordSpan.find(`:eq(${currentWordIndex})`).removeClass('current-target')
-                    currentWordIndex++
-                    wordSpan.find('span').eq(currentWordIndex).addClass('current-target')
-                }
-            })
-            
-            // for initial state of the game
-            loadNextWords()
-        })
-    </script>
-
+    <script src="/js/play.js" defer></script>
 </html>

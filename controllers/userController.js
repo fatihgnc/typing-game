@@ -1,19 +1,29 @@
 (async () => {
-    const { Sequelize, DataTypes } = require('sequelize')
-    const MySQL = require('../database/db')
-    const db = new MySQL(Sequelize, DataTypes)
-    await db.checkConnection()
-    const User = await require('../models/User')(db.sequelize, DataTypes)
+    const createModels = require('../models')
+    const { User, Game, db } = await createModels()    
 
+    // inserting user to db with the username value coming from request object
     exports.insertUser = async (req, res) => {
-        // console.log('out try')
         try {
-            // console.log('in try')
-            const user = await db.insertRecord(User, { ...req.body })
-            // console.log('done');
+            const username = req.body.username
+            const user = await db.insertUser(User, username)
             res.status(201).send(user)
-        } catch (err) {
+            
+        } catch (err) {                             
             res.status(400).send(err.errors[0].message)
+        }
+    }
+
+    // inserting game data with the id belonging to upcoming user data
+    exports.insertGameData = async (req, res) => {
+        try {
+            const username = req.query.username
+            await db.insertGameRecord(Game, User, username, req.body)
+            await db.checkUserHighScore(User, Game, username)       
+            res.status(201).send('game data saved to db')
+
+        } catch (err) {
+            res.status(500).send(err)
         }
     }
 })()

@@ -7,6 +7,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    color: white;
 }
 
 body {
@@ -14,11 +15,12 @@ body {
     place-items: center;
     min-height: 100vh;
     overflow: hidden;
-    background-color: #cacaca;
+    background-color: #242424;
 }
 
+// ========CONTAINER=========
 .container {
-    width: max-content;
+    width: 30%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -38,7 +40,7 @@ body {
         align-items: center;
         width: 75px;
         height: 75px;
-        border: thin solid black;
+        border: thin solid #fff;
         border-radius: 50%;
         font-size: 1.2rem;
     }
@@ -48,6 +50,7 @@ body {
         width: max-content;
         word-spacing: 5px;
         font-size: 1.2rem;
+        font-weight: 200;
     }
 
     #wordInput {
@@ -56,31 +59,58 @@ body {
         outline: none;
         border: none;
         font-size: 1rem;
+        background: rgba(0, 0, 0, .8);
     }
 
     .score {
         font-weight: 600;
     }
 
-    .scoreboard {
-        border: thin solid black;
-        width: max-content;
-        padding: .5rem 1rem;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: all .2s ease;
-    
-        &:hover {
-            background-color: black;
-            color: white;
+    .game-over-container,
+    .game-over__buttons {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1.5em;
+    }
+
+    // ======GAME OVER CONTAINER==========
+    .game-over-container {
+        width: 100%;
+        padding: 1em;
+        display: none;
+        transition: display .2s;
+
+        .game-over__buttons {
+            display: flex;
+
+            .scoreboard,
+            .play-again {
+                border: thin solid #848484;
+                min-width: max-content;
+                padding: .5rem 1rem;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: all .2s ease;
+            
+                &:hover {
+                    background-color: #848484;
+                    color: white;
+                }
+            }
         }
     }
-    
+    // =========GAME OVER CONTAINER END=========
 }
+// ==========CONTAINER END============
 
 .current-target {
-    background: rgba(#343434, .25);
+    background: rgba(#af8e8e, .5);
     padding: .25rem;
+}
+
+::placeholder {
+    color: #c4c4c4;
 }
 
 @media screen and (max-width: 700px) {
