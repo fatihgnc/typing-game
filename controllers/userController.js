@@ -4,12 +4,14 @@
 
     // inserting user to db with the username value coming from request object
     exports.insertUser = async (req, res) => {
+        console.log('adam')
         try {
             const username = req.body.username
             const user = await db.insertUser(User, username)
             res.status(201).send(user)
             
-        } catch (err) {                             
+        } catch (err) {          
+            console.log(err)                   
             res.status(400).send(err.errors[0].message)
         }
     }

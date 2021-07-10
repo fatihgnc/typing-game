@@ -24,6 +24,13 @@
             })
         }
 
+        if(username.length < 3 || username.length > 15) {
+            return res.render('index.ejs', {
+                title: 'Home',
+                redirectMsg: 'Username must be between 3-15 characters!'
+            })
+        }
+
         // if a user directly goes to /play with some username in the query string, i make sure 
         // that it gets saved in the database
         const user = await db.getUser(User, username)

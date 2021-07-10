@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <link rel="stylesheet" href="/css/play.css">
+<link rel="stylesheet" href="/css/nav.css">
 <%- include('./partials/head.ejs') %>
 
     <body>
+        <%- include('./partials/nav.ejs') %>
         <div class="container">
-            <p class="timer">60</p>
+            <p class="timer"></p>
             <span class="target-words"></span>
-            <input type="text" id="wordInput" placeholder="enter here">
+            <input type="text" id="wordInput" placeholder="Enter here">
+            <span>Press <small style="color: black; text-decoration: underline;">space</small> after you type the word.</span>
+            <span class="game-over-msg">Game is over</span>
             <div class="game-over-container">
                 <div class="game-over__success-rate"></div>
                 <div class="game-over__buttons">
-                    <span class="scoreboard">Scoreboard</span>
                     <span class="play-again">Play Again</span>
+                    <span class="scoreboard">Leaderboard</span>
                 </div>
             </div>
 
@@ -21,4 +25,5 @@
     </body>
 
     <script src="/js/play.js" defer></script>
+    <script src="/js/menu-operations.js" defer></script>
 </html>

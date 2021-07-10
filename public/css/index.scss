@@ -1,22 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;800&display=swap');
-
-*,
-*::before,
-*::after {
-    font-family: 'Poppins', sans-serif;
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    color: white;
-}
-
-body {
-    display: grid;
-    place-items: center;
-    min-height: 100vh;
-    overflow: hidden;
-    background-color: #242424;
-}
+@import './partials/flex';
+@import './partials/initial';
 
 .redirect-msg {
     padding: .75em;
@@ -29,10 +13,8 @@ body {
 
 // =========container==========
 .container {
+    @include flex($flex: flex, $dir: column, $gap: 3rem);
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 3em;
 
     // ---cta start---
     .cta-header {
@@ -58,13 +40,11 @@ body {
     }
 
     .cta-btn {
+        @include flex($flex: flex, $align: center, $justify: center);
         position: relative;
         width: 15%;
         margin: 0 auto;
         padding: 1rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
         background: gray;
         border: none;
         letter-spacing: 1.5px;
@@ -74,9 +54,7 @@ body {
         transition: all .2s ease;
 
         .cta-btn__play-icon {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
+            @include flex($flex: inline-flex, $align: center, $justify: center);
             margin-right: 1rem;
 
             svg {
@@ -106,16 +84,16 @@ body {
     @media screen and (max-width: 750px) {
 
         .cta-header {
-            font-size: 2rem;
+            font-size: 1.5rem;
         }
 
         .cta-btn {
             padding: .75rem;
             width: 60%;
+            font-size: 1.1rem;
         }
 
     }
-
     // ---cta end---
 
     // ---registration start---

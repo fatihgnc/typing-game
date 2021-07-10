@@ -1,17 +1,21 @@
 $(function () {
     // GLOBAL VARIABLES
+    const username = location.search.split('=')[1]
     const wordSpan = $('.target-words')
     const wordInput = $('#wordInput')
     const words = getWords()
+    const gameOverMsg = $('.game-over-msg')
     const gameOverContainer = $('.game-over-container')
     const successRate = gameOverContainer.find('.game-over__success-rate')
     const playAgainBtn = gameOverContainer.find('.play-again')
-    const scoreboardBtn = gameOverContainer.find('.scoreboard')
+    const leaderboardBtn = gameOverContainer.find('.scoreboard')
     let wordIndex = 0
     let currentWordIndex = 0
     const timer = $('.timer')
     let correctCount = 0
     let incorrectCount = 0
+    let timeLeft = 60
+    timer.text(timeLeft)
 
     // GETTING THE WORDS FROM SERVER VIA AJAX CALL
     function getWords() {
@@ -20,7 +24,7 @@ $(function () {
         $.ajax({
             url: '/getWords',
             success: (data, status, jqxhr) => {
-                wordsToFetch = data.filter(piece => piece.length <= 8)
+                wordsToFetch = data.filter(piece => piece.length <= 7)
             },
             error: (jqxhr, status, err) => {
                 alert(jqxhr.responseText)
@@ -51,9 +55,6 @@ $(function () {
 
     // STARTING TIMER
     function startTimer() {
-        let timeLeft = 60
-        timer.text(timeLeft)
-
         const timeInterval = setInterval(() => {
             timer.text(--timeLeft)
             checkTimer(timeInterval, timeLeft)
@@ -67,7 +68,10 @@ $(function () {
             elem.css('color', 'yellowgreen')
             correctCount++
         } else {
-            elem.css('color', '#ea8282')
+            elem.css({
+                color: '#ea8282',
+                textDecoration: 'line-through'
+            })
             incorrectCount++
         }
     }
@@ -82,21 +86,19 @@ $(function () {
     function gameOver(interval) {
         clearInterval(interval)
 
-        wordInput.prop('readonly', true)
-        wordInput.css('cursor', 'not-allowed')
-        wordInput.attr('placeholder', 'game over')
-        wordInput.off('keyup')
-
+        wordInput.css('display', 'none')
+        wordInput.next('span').css('display', 'none')
+        gameOverMsg.css('display', 'inline-block')
         gameOverContainer.css('display', 'flex')
 
         const _successRate = calculateSuccessPercentage(correctCount, incorrectCount)
         successRate.append(`
                 you did 
-                <b>${correctCount}/${correctCount + incorrectCount}</b>, 
-                which is <b>${_successRate}%</b>
+                <b style="color: black;">${correctCount}/${correctCount + incorrectCount}</b> , 
+                which is <b style="color: black;">${_successRate}%</b>
             `)
 
-        const username = location.search.split('=')[1]
+       
         saveGameData(username, correctCount, incorrectCount, _successRate)
     }
 
@@ -131,7 +133,28 @@ $(function () {
         })
     }
 
-    // EVENTS
+    // WILL BE CALLED WHEN PLAY AGAIN IS CLICKED
+    function playAgain () {
+        // resetting everything
+        timeLeft = 60
+        timer.text(timeLeft)
+        correctCount = 0
+        incorrectCount = 0
+        currentWordIndex = 0
+        gameOverContainer.css('display', 'none')
+        gameOverMsg.css('display', 'none')
+        wordInput.css('display', 'block')
+        wordInput.next('span').css('display', 'inline-block')
+        successRate.empty()
+        loadNextWords()
+        wordInput.one('keyup', startTimer)
+    }
+
+    // NAVIGATIN TO LEADERBOARD
+    const navigateToLeaderboard = () => location.href = '/play/leaderboard'
+
+    // ==== EVENTS ====
+
     // THIS EVENT IS HAPPENING ONLY ONCE BECAUSE WE NEED IT ONCE TO START THE TIMER
     wordInput.one('keyup', startTimer)
 
@@ -156,6 +179,10 @@ $(function () {
             nextWord.addClass('current-target')
         }
     })
+
+    playAgainBtn.on('click', playAgain)
+
+    leaderboardBtn.on('click', navigateToLeaderboard)
 
     // for initial state of the game
     loadNextWords()

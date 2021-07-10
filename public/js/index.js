@@ -42,6 +42,7 @@ $(function () {
             method: 'POST',
             data: { username: $username },
             success: (data, status, jqxhr) => {
+                // console.log(status)
                 statusMsg.text($successMessage)
                 statusMsg.css({
                     background: 'gray',
@@ -50,6 +51,7 @@ $(function () {
                 setTimeout(() => window.location.href = `/play?username=${$username}`, 3000)
             },
             error: (jqxhr, status, err) => {
+                // console.log(status)
                 const $failureMessage = jqxhr.responseText
                 statusMsg.text($failureMessage)
                 statusMsg.css({
@@ -62,6 +64,7 @@ $(function () {
     }
     
     $registrationSubmitButton.on('click', e => {
+        e.preventDefault()
         addUser($registrationStatusMessage)
     })
 })

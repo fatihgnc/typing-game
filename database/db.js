@@ -32,11 +32,11 @@ class MySQL {
         try {
             const user = User.build({ username })
             await user.save()
-            console.log(chalk.greenBright('Record saved to database succesfully.'))
+            console.log(chalk.greenBright('User saved to database succesfully.'))
             return user
             
         } catch (err) {
-            console.error(err)
+            throw err
         }
     }
     
@@ -53,7 +53,7 @@ class MySQL {
             return user
             
         } catch (err) {
-            console.error(err)
+            throw err
         }
     }
 
@@ -75,11 +75,11 @@ class MySQL {
                 await User.update({ highScore }, {
                     where: { username }
                 })
-                console.log(chalk.greenBright(`highscore of ${username} is updated from ${userHighScore} to ${highScore}`))
+                console.log(chalk.greenBright(`Highscore of ${username} is updated from ${userHighScore} to ${highScore}.`))
             }
 
         } catch (err) {
-            console.error(err)
+            throw err
         }
     }
 
@@ -96,7 +96,7 @@ class MySQL {
             const user = await this.getUser(User, username)
             console.log(correct, incorrect, percentage)
             if(user[0] == 0) {
-                return new Error('user not found')
+                return new Error('User not found')
             }
 
             const UserId = user[0].dataValues.id
@@ -108,10 +108,10 @@ class MySQL {
             })
 
             await game.save()
-            console.log(chalk.greenBright('game data saved to db succesfully !!'))
+            console.log(chalk.greenBright('Game data saved to db succesfully.'))
 
         } catch (err) {
-            console.error(err)
+            throw err
         }
     }
 }
