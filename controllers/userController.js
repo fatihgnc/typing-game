@@ -1,17 +1,17 @@
 (async () => {
     const createModels = require('../models')
     const { User, Game, db } = await createModels()    
+    
 
     // inserting user to db with the username value coming from request object
     exports.insertUser = async (req, res) => {
-        console.log('adam')
         try {
             const username = req.body.username
             const user = await db.insertUser(User, username)
             res.status(201).send(user)
             
         } catch (err) {          
-            console.log(err)                   
+            // console.log(err)                   
             res.status(400).send(err.errors[0].message)
         }
     }
@@ -21,7 +21,8 @@
         try {
             const username = req.query.username
             await db.insertGameRecord(Game, User, username, req.body)
-            await db.checkUserHighScore(User, Game, username)       
+            await db.checkUserHighScore(User, Game, username) 
+            console.log(await db.getEveryUsersBestGame(Game, User))
             res.status(201).send('game data saved to db')
 
         } catch (err) {

@@ -58,7 +58,7 @@ $(function () {
         const timeInterval = setInterval(() => {
             timer.text(--timeLeft)
             checkTimer(timeInterval, timeLeft)
-        }, 50)
+        }, 100)
     }
 
     // CHECKING WORD INPUT
@@ -94,8 +94,8 @@ $(function () {
         const _successRate = calculateSuccessPercentage(correctCount, incorrectCount)
         successRate.append(`
                 you did 
-                <b style="color: black;">${correctCount}/${correctCount + incorrectCount}</b> , 
-                which is <b style="color: black;">${_successRate}%</b>
+                <strong style="color: black;">${correctCount}/${correctCount + incorrectCount}</strong> , 
+                which is <strong style="color: black;">${_successRate}%</strong>
             `)
 
        

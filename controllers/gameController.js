@@ -33,7 +33,7 @@
 
         // if a user directly goes to /play with some username in the query string, i make sure 
         // that it gets saved in the database
-        const user = await db.getUser(User, username)
+        const user = await db.getSingleUser(User, username)
 
         if(user.length === 0) {
             await db.insertUser(User, username)
@@ -49,5 +49,11 @@
     exports.getWords = (req, res) => {
         const words = getWordsFromFile(pathToFile)
         res.send(words)
+    }
+
+    exports.renderLeaderboard = async (req, res) => {
+        res.render('leaderboard.ejs', {
+            title: 'Leaderboard'
+        })
     }
 })()

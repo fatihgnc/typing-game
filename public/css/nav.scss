@@ -3,16 +3,14 @@
 /* ----MENU---- */
 .menu-icon {
     position: absolute;
-    bottom: 0;
-    left: 0;
+    top: 2%;
+    right: 2%;
     z-index: 999;
     @include flex($flex: flex, $align: center, $justify: center);
-    border-top: thin solid white;
-    border-right: thin solid white;
-    border-top-right-radius: 50%;
     cursor: pointer;
     transition: all .2s ease;
-    padding: 1em;
+    padding: 12px;
+    box-shadow: 0px 0px 1px white;
     
     &:hover {
         background: white;

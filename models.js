@@ -51,7 +51,7 @@ module.exports = async function () {
     })
 
     // one to many relationship 
-    // one user can have many game records
+    // a user can have many game records
     User.hasMany(Game, { constraints: false })
     Game.belongsTo(User)
 
