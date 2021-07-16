@@ -2,12 +2,12 @@ const chalk = require('chalk')
 const { Sequelize, DataTypes, Model } = require('sequelize')
 require('dotenv').config()
 
-Array.prototype.hasMost = function (attrib, attrib2) {
+Array.prototype.hasMost = function (attr, attr2) {
     return (this.length && this.reduce((acc, curr) => {
-        acc[attrib] = acc[attrib] || 0
-        acc[attrib2] = acc[attrib2] || 0 
+        acc[attr] = acc[attr] || 0
+        acc[attr2] = acc[attr2] || 0 
 
-        if (curr[attrib] > acc[attrib] && curr[attrib2] > acc[attrib2]) { acc = { ...curr } }
+        if (curr[attr] >= acc[attr] && curr[attr2] >= acc[attr2]) { acc = { ...curr } }
 
         return acc
     }, {}))
@@ -61,6 +61,11 @@ class MySQL {
     async getSingleUser(User, username) {
         try {
             const user = await User.findAll({ where: { username }, limit: 1 })
+
+            if (!user.length) {
+                return console.log(chalk.red(`User with username: ${username} is not found in database.`))
+            }
+
             return user
 
         } catch (err) {
@@ -72,11 +77,11 @@ class MySQL {
         try {
             const users = await User.findAll()
 
-            if (users) {
-                return users
+            if (!users.length) {
+                return console.log(chalk.red('There is no user record in database.'))
             }
 
-            console.log(chalk.red('There is no user record in database.'))
+            return users
 
         } catch (err) {
             throw err
@@ -87,11 +92,11 @@ class MySQL {
         try {
             const games = await Game.findAll()
 
-            if (games) {
-                return games
+            if (!games.length) {
+                return console.log(chalk.red('There is no game record in database.'))
             }
-
-            console.log(chalk.red('There is no game record in database.'))
+            
+            return games
 
         } catch (err) {
             throw err
@@ -111,12 +116,13 @@ class MySQL {
         try {
             const user = await this.getSingleUser(User, username)
             const userHighScore = user[0].dataValues.highScore
-            const highScore = await Game.max('correct', { where: { UserId: user[0].dataValues.id } })
-            if (userHighScore < highScore) {
-                await User.update({ highScore }, {
+            const highScoreCandidate = await Game.max('correct', { where: { UserId: user[0].dataValues.id } })
+            
+            if (userHighScore < highScoreCandidate) {
+                await User.update({ highScore: highScoreCandidate }, {
                     where: { username }
                 })
-                console.log(chalk.greenBright(`Highscore of ${username} is updated from ${userHighScore} to ${highScore}.`))
+                console.log(chalk.greenBright(`Highscore of ${username} is updated from ${userHighScore} to ${highScoreCandidate}.`))
             }
 
         } catch (err) {
@@ -135,11 +141,6 @@ class MySQL {
     async insertGameRecord(Game, User, username, { correct, incorrect, percentage }) {
         try {
             const user = await this.getSingleUser(User, username)
-            console.log(correct, incorrect, percentage)
-            if (user[0] == 0) {
-                return new Error('User not found')
-            }
-
             const UserId = user[0].dataValues.id
             const game = Game.build({
                 correct,
@@ -160,27 +161,40 @@ class MySQL {
         try {
             const users = await this.getAllUsers(User)
             const games = await this.getAllGames(Game)
+            // console.log(users, games)
 
-            const userBestGames = []
+            const usersBestGames = []
 
             if (users && games) {
+
+                // looping through every user and finding their game records
                 for await(const user of users) {
                     const userGames = await Game.findAll({ where: { UserId: user.dataValues.id } })
-                    const gameStats = userGames.map(game => ({
+                    
+                    // extracting the games as an array in the format we want
+                    const rawGameStats = userGames.map(game => ({
                         username: user.dataValues.username,
                         ...game.dataValues
                     }))
-                    delete gameStats.updatedAt
-                    const bestGame = gameStats.hasMost('correct', 'percentage')
-                    userBestGames.push(bestGame)
+
+                    // removing unwanted properties from stats
+                    const filteredGameStats = rawGameStats.map(stats => {
+                        delete stats['id']
+                        delete stats['updatedAt']
+                        delete stats['UserId']
+                        return stats
+                    })
+
+                    // here we are finding the best performance of the current user and pushing it to the best games
+                    const bestGame = filteredGameStats.hasMost('correct', 'percentage')
+                    usersBestGames.push(bestGame)
                 }
             }
 
-            // console.log(userBestGames)
-            return userBestGames
+            return usersBestGames
 
         } catch (err) {
-            console.log(err)
+            throw err
         }
     }
 }

@@ -4,7 +4,7 @@ $(function () {
     const $registrationForm = $('.registration')
     const $inputUsername = $registrationForm.find('#registration__username')
     const $registrationSubmitButton = $registrationForm.find('#registration__submit')
-    const $registrationStatusMessage = $registrationForm.find('.registration__status-msg')
+    const $registrationStatusMessageElem = $registrationForm.find('.registration__status-msg')
     const $successMessage = 'Succesfully registered, you will be redirected to game page in 3 seconds...'
     const $failureColor = '#744747'
     const headerToDisplay = 'How fast can you type?'.split('')
@@ -36,6 +36,19 @@ $(function () {
     // ajax call to /user/add
     function addUser(statusMsg) {
         const $username = $inputUsername.val()
+        const currUsername = localStorage.getItem('username')
+
+        if(currUsername) {
+            statusMsg.text('you should log out first!')
+            statusMsg.css({
+                background: $failureColor,
+                opacity: 1
+            })
+
+            return
+        }
+
+        localStorage.setItem('username', $username)
 
         $.post({
             url: '/user/add',
@@ -58,13 +71,12 @@ $(function () {
                     background: $failureColor,
                     opacity: 1
                 })
-                // console.log(status, jqxhr.responseText, $username)
             }
         })
     }
     
     $registrationSubmitButton.on('click', e => {
         e.preventDefault()
-        addUser($registrationStatusMessage)
+        addUser($registrationStatusMessageElem)
     })
 })

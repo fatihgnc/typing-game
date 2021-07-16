@@ -43,13 +43,14 @@
         position: relative;
         width: 15%;
         margin: 0 auto;
-        padding: 1rem;
-        background: gray;
+        padding: 25px 15px;
+        background: none;
         border: none;
         letter-spacing: 1.5px;
         font-size: 1.3rem;
         font-weight: 300;
         cursor: pointer;
+        box-shadow: 0px 0px 1px white;
         transition: all .2s ease;
 
         .cta-btn__play-icon {
@@ -59,10 +60,6 @@
             svg {
                 fill: white;
             }
-        }
-
-        &:hover {
-            background: #545454;
         }
     }
     // =========container end===========
@@ -98,7 +95,7 @@
     // ---registration start---
     .registration {
         margin: 0 auto;
-        padding: 1rem;
+        padding: 0 25px;
         display: none;
         text-align: center;
         transition: all .5s ease;

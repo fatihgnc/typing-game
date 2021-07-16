@@ -6,7 +6,16 @@
     const createModels = require('../models')
     const { User, Game, db } = await createModels()
     
-    exports.renderHome = (req, res) => {
+    exports.renderHome = async (req, res) => {
+        const redirectMsg = req.query.redirectMsg
+
+        if(redirectMsg) {
+            return res.render('index.ejs', {
+                title: 'Home',
+                redirectMsg
+            })
+        }
+
         res.render('index.ejs', {
             title: 'Home',
             redirectMsg: null
@@ -24,6 +33,7 @@
             })
         }
 
+        // validation
         if(username.length < 3 || username.length > 15) {
             return res.render('index.ejs', {
                 title: 'Home',
@@ -35,11 +45,9 @@
         // that it gets saved in the database
         const user = await db.getSingleUser(User, username)
 
-        if(user.length === 0) {
+        if(!user) 
             await db.insertUser(User, username)
-            // console.log(user)
-        }
-        
+            
         res.render('play.ejs', {
             title: 'Play'
         })
@@ -52,8 +60,24 @@
     }
 
     exports.renderLeaderboard = async (req, res) => {
-        res.render('leaderboard.ejs', {
-            title: 'Leaderboard'
-        })
+        try {
+            const games = await db.getEveryUsersBestGame(Game, User)
+
+            if(!games.length) {
+                return res.render('leaderboard.ejs', {
+                    title: 'Leaderboard',
+                    games: []
+                })
+            }
+
+            // console.log(games)
+
+            res.render('leaderboard.ejs', {
+                title: 'Leaderboard',
+                games
+            })
+        } catch (err) {
+            res.status(500).send(err)
+        }
     }
 })()

@@ -17,6 +17,10 @@ $(function () {
     let timeLeft = 60
     timer.text(timeLeft)
 
+    const usernameLocal = localStorage.getItem('username')
+    if(!usernameLocal)
+        localStorage.setItem('username', usernameLocal)
+
     // GETTING THE WORDS FROM SERVER VIA AJAX CALL
     function getWords() {
         let wordsToFetch = []
@@ -95,7 +99,8 @@ $(function () {
         successRate.append(`
                 you did 
                 <strong style="color: black;">${correctCount}/${correctCount + incorrectCount}</strong> , 
-                which is <strong style="color: black;">${_successRate}%</strong>
+                which is 
+                <strong style="color: black;">${_successRate}%</strong>
             `)
 
        
@@ -150,7 +155,7 @@ $(function () {
         wordInput.one('keyup', startTimer)
     }
 
-    // NAVIGATIN TO LEADERBOARD
+    // NAVIGATING TO LEADERBOARD
     const navigateToLeaderboard = () => location.href = '/play/leaderboard'
 
     // ==== EVENTS ====

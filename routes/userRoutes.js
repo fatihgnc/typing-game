@@ -7,7 +7,7 @@ router
         await userController.insertUser(req, res)
     })
     .put('/saveGameData', async (req, res) => {
-        await userController.insertGameData(req, res)
+        await userController.insertUsersGameData(req, res)
     })
 
 module.exports = router

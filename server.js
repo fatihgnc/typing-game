@@ -1,7 +1,6 @@
 // imports 
 const express = require('express')
 const morgan = require('morgan')
-const bodyParser = require('body-parser')
 const path = require('path')
 require('dotenv').config()
 
@@ -18,8 +17,8 @@ app.set('view engine', 'ejs')
 app.use(express.json())
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(morgan('dev'))
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
 app.use('/', gameRouter)
 app.use('/user', userRouter)
 

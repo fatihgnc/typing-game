@@ -17,12 +17,11 @@
     }
 
     // inserting game data with the id belonging to upcoming user data
-    exports.insertGameData = async (req, res) => {
+    exports.insertUsersGameData = async (req, res) => {
         try {
             const username = req.query.username
             await db.insertGameRecord(Game, User, username, req.body)
             await db.checkUserHighScore(User, Game, username) 
-            console.log(await db.getEveryUsersBestGame(Game, User))
             res.status(201).send('game data saved to db')
 
         } catch (err) {
