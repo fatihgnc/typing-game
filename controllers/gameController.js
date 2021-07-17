@@ -1,5 +1,5 @@
 (async () => {
-    const { getWordsFromFile } = require('../words/wordOperations')
+    const { getWordsFromFile } = require('../utils/wordOperations')
     const path = require('path')
     const pathToFile = path.join(__dirname, '../kelime-listesi.txt')
     

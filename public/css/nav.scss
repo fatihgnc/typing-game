@@ -1,5 +1,15 @@
 @import './partials/flex';
 
+.current-user {
+    position: absolute;
+    top: 2%;
+    left: 2%;
+    border-bottom: thin solid #a4a4a4;
+    padding: 7.5px;
+    letter-spacing: 2px;
+    font-size: 20px;
+}
+
 /* ----MENU---- */
 .menu-icon {
     position: absolute;

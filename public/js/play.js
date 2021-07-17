@@ -18,13 +18,23 @@ $(function () {
     timer.text(timeLeft)
 
     const usernameLocal = localStorage.getItem('username')
-    if(!usernameLocal)
+
+    // if the user comes to this page via typing url with username query string value, 
+    // i make sure that the username value gets saved in local storage
+    if (!usernameLocal) {
         localStorage.setItem('username', usernameLocal)
+    }
+
+    // if a user tries to play with a different username even though there is a registered username
+    // through entering play url with different query string value of username
+    if (username !== usernameLocal) {
+        location.href = '/?redirectMsg=there is already a logged in user!'
+    }
 
     // GETTING THE WORDS FROM SERVER VIA AJAX CALL
     function getWords() {
         let wordsToFetch = []
-        
+
         $.ajax({
             url: '/getWords',
             success: (data, status, jqxhr) => {
@@ -62,7 +72,7 @@ $(function () {
         const timeInterval = setInterval(() => {
             timer.text(--timeLeft)
             checkTimer(timeInterval, timeLeft)
-        }, 100)
+        }, 1000)
     }
 
     // CHECKING WORD INPUT
@@ -103,15 +113,15 @@ $(function () {
                 <strong style="color: black;">${_successRate}%</strong>
             `)
 
-       
+
         saveGameData(username, correctCount, incorrectCount, _successRate)
     }
 
     // CALCULATING SUCCESS PERCENTAGE
     function calculateSuccessPercentage(correct, incorrect) {
         // i had to do it step by step otherwise it was not working
-        if(correct === 0) return 0
-        else if(correct + incorrect === 0) return 0
+        if (correct === 0) return 0
+        else if (correct + incorrect === 0) return 0
         else {
             const correctTimesHundred = correct * 100
             const totalAnswers = correct + incorrect
@@ -131,7 +141,7 @@ $(function () {
             },
             success(data, status, jqxhr) {
                 console.log(data, status)
-            }, 
+            },
             error(jqxhr, status, err) {
                 console.log(status, err)
             }
@@ -139,7 +149,7 @@ $(function () {
     }
 
     // WILL BE CALLED WHEN PLAY AGAIN IS CLICKED
-    function playAgain () {
+    function playAgain() {
         // resetting everything
         timeLeft = 60
         timer.text(timeLeft)
@@ -175,7 +185,7 @@ $(function () {
             currentWordIndex = 0
         } // and here if space bar is pressed but  
         // the word is not the last word in the current party of the words
-        else if (e.keyCode === 32) { 
+        else if (e.keyCode === 32) {
             const currentWord = wordSpan.find('span').eq(currentWordIndex)
             const nextWord = wordSpan.find('span').eq(++currentWordIndex)
             checkInput(wordInput.val(), currentWord.text(), currentWord)

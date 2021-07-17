@@ -2,12 +2,15 @@ const chalk = require('chalk')
 const { Sequelize, DataTypes, Model } = require('sequelize')
 require('dotenv').config()
 
+// function to find the best game through all games of every user
 Array.prototype.hasMost = function (attr, attr2) {
     return (this.length && this.reduce((acc, curr) => {
         acc[attr] = acc[attr] || 0
-        acc[attr2] = acc[attr2] || 0 
+        acc[attr2] = acc[attr2] || 0
 
-        if (curr[attr] >= acc[attr] && curr[attr2] >= acc[attr2]) { acc = { ...curr } }
+        if (curr[attr] + (curr[attr2] / 10) > acc[attr] + (acc[attr2] / 10)) {
+            acc = { ...curr }
+        }
 
         return acc
     }, {}))
@@ -33,7 +36,7 @@ class MySQL {
     }
 
     /**
-     * Function to insert user to db.
+     * Function to insert user to database.
      * 
      * @param {*} User user model 
      * @param {*} username username to be assigned as the username of the record to be inserted
@@ -55,7 +58,7 @@ class MySQL {
      * Function to fetch user through username value.
      * 
      * @param {*} User user model
-     * @param {*} username username value of the record to fetch from db
+     * @param {*} username username value of the record to fetch from database
      * @returns fetched user
      */
     async getSingleUser(User, username) {
@@ -73,6 +76,12 @@ class MySQL {
         }
     }
 
+    /**
+     * Gets all users from database.
+     * 
+     * @param {*} User user model
+     * @returns all users in database if exists, a message regarding the nonexistence of records otherwise.
+     */
     async getAllUsers(User) {
         try {
             const users = await User.findAll()
@@ -88,6 +97,12 @@ class MySQL {
         }
     }
 
+    /**
+     * Gets all games from database.
+     * 
+     * @param {*} Game Game model
+     * @returns all games in database if exists, a message regarding the nonexistence of records otherwise.
+     */
     async getAllGames(Game) {
         try {
             const games = await Game.findAll()
@@ -95,7 +110,7 @@ class MySQL {
             if (!games.length) {
                 return console.log(chalk.red('There is no game record in database.'))
             }
-            
+
             return games
 
         } catch (err) {
@@ -117,7 +132,7 @@ class MySQL {
             const user = await this.getSingleUser(User, username)
             const userHighScore = user[0].dataValues.highScore
             const highScoreCandidate = await Game.max('correct', { where: { UserId: user[0].dataValues.id } })
-            
+
             if (userHighScore < highScoreCandidate) {
                 await User.update({ highScore: highScoreCandidate }, {
                     where: { username }
@@ -131,6 +146,7 @@ class MySQL {
     }
 
     /**
+     * Inserts game record to database.
      * 
      * @param {*} Game game model 
      * @param {*} User user model
@@ -157,6 +173,13 @@ class MySQL {
         }
     }
 
+    /**
+     * Finds all games and chooses the best one for every individual user.
+     * 
+     * @param {*} Game Game model
+     * @param {*} User User model
+     * @returns an array which consists of each user's best performed game.
+     */
     async getEveryUsersBestGame(Game, User) {
         try {
             const users = await this.getAllUsers(User)
@@ -168,34 +191,61 @@ class MySQL {
             if (users && games) {
 
                 // looping through every user and finding their game records
-                for await(const user of users) {
+                for await (const user of users) {
                     const userGames = await Game.findAll({ where: { UserId: user.dataValues.id } })
-                    
-                    // extracting the games as an array in the format we want
-                    const rawGameStats = userGames.map(game => ({
-                        username: user.dataValues.username,
-                        ...game.dataValues
-                    }))
 
-                    // removing unwanted properties from stats
-                    const filteredGameStats = rawGameStats.map(stats => {
-                        delete stats['id']
-                        delete stats['updatedAt']
-                        delete stats['UserId']
-                        return stats
-                    })
+                    if (userGames.length > 0) {
+                        // extracting the games as an array in the format we want
+                        const rawGameStats = userGames.map(game => ({
+                            username: user.dataValues.username,
+                            ...game.dataValues
+                        }))
 
-                    // here we are finding the best performance of the current user and pushing it to the best games
-                    const bestGame = filteredGameStats.hasMost('correct', 'percentage')
-                    usersBestGames.push(bestGame)
+                        // removing unwanted properties from stats
+                        const filteredGameStats = rawGameStats.map(stats => {
+                            delete stats['id']
+                            delete stats['updatedAt']
+                            delete stats['UserId']
+                            return stats
+                        })
+
+                        // here we are finding the best performance of the current user and pushing it to the best games
+                        const bestGame = filteredGameStats.hasMost('correct', 'percentage')
+                        usersBestGames.push(bestGame)
+                    }
                 }
             }
+
+            usersBestGames.sort(this.sortUsersGames)
+            // console.log(usersBestGames)
 
             return usersBestGames
 
         } catch (err) {
             throw err
         }
+    }
+
+    /**
+     * Callback function for sort method.
+     * 
+     * @param {*} a first game 
+     * @param {*} b second game
+     * @returns 1, 0 or -1 according to comparison result
+     */
+    sortUsersGames(a, b) {
+        const totalScoreA = a.correct + (a.percentage / 10)
+        const totalScoreB = b.correct + (b.percentage / 10)
+
+        if (totalScoreA < totalScoreB) {
+            return 1
+        }
+
+        if (totalScoreB < totalScoreA) {
+            return -1
+        }
+
+        return 0
     }
 }
 

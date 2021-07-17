@@ -1,3 +1,5 @@
+<span class="current-user"></span>
+
 <!-- hamburger icon -->
 <div class="menu-icon">
     <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd">
@@ -17,3 +19,10 @@
     </div>
 </div>
 <!-- menu end -->
+
+<script>
+    const currentUser = document.querySelector('.current-user') 
+    const currUsername = localStorage.getItem('username')
+    currentUser.style.borderBottom = currUsername ? 'thin solid #a4a4a4' : 'none'
+    currentUser.textContent = currUsername ? currUsername : ''
+</script>
