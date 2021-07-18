@@ -8,7 +8,7 @@ const userRouter = require('./routes/userRoutes')
 const gameRouter = require('./routes/gameRoutes')
 
 const app = express()
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 5192
 
 // setting ejs as the templating language
 app.set('view engine', 'ejs')
@@ -23,3 +23,5 @@ app.use('/', gameRouter)
 app.use('/user', userRouter)
 
 app.listen(PORT, () => console.log(`server listening on port: ${PORT}`))
+
+module.exports = app

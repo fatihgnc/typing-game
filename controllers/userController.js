@@ -1,7 +1,5 @@
 (async () => {
-    const createModels = require('../models')
-    const { User, Game, db } = await createModels()    
-    
+    const { User, Game, db } = await require('../models')()
 
     // inserting user to db with the username value coming from request object
     exports.insertUser = async (req, res) => {

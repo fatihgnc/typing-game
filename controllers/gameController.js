@@ -3,8 +3,7 @@
     const path = require('path')
     const pathToFile = path.join(__dirname, '../kelime-listesi.txt')
     
-    const createModels = require('../models')
-    const { User, Game, db } = await createModels()
+    const { User, Game, db } = await require('../models')()
     
     exports.renderHome = async (req, res) => {
         const redirectMsg = req.query.redirectMsg
@@ -16,7 +15,7 @@
             })
         }
 
-        res.render('index.ejs', {
+        res.status(200).render('index.ejs', {
             title: 'Home',
             redirectMsg: null
         })
