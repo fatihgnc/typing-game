@@ -1,6 +1,8 @@
 // imports 
 const express = require('express')
 const morgan = require('morgan')
+const helmet = require('helmet')
+const cors = require('cors')
 const path = require('path')
 require('dotenv').config()
 
@@ -8,17 +10,20 @@ const userRouter = require('./routes/userRoutes')
 const gameRouter = require('./routes/gameRoutes')
 
 const app = express()
-const PORT = process.env.PORT || 5192
+const PORT = process.env.PORT || 3000
 
 // setting ejs as the templating language
 app.set('view engine', 'ejs')
 
 // middlewares
+app.use(cors())
+app.use(helmet())
 app.use(express.json())
 app.use(express.static(path.join(__dirname, 'public')))
-app.use(morgan('dev'))
-app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+app.use(morgan('combined'))
+
+// routes
 app.use('/', gameRouter)
 app.use('/user', userRouter)
 
