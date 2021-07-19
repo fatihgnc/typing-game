@@ -62,7 +62,7 @@
         try {
             const games = await db.getEveryUsersBestGame(Game, User)
 
-            if(!games.length) {
+            if(!games) {
                 return res.render('leaderboard.ejs', {
                     title: 'Leaderboard',
                     games: []

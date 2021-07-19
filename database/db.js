@@ -18,7 +18,7 @@ Array.prototype.hasMost = function (attr, attr2) {
 
 // connecting db and passing sequelize instance to mysql class
 const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, process.env.DB_PASSWORD, {
-    host: 'localhost',
+    host: process.env.DB_HOSTNAME,
     dialect: 'mysql',
     pool: {
         max: 5,
@@ -184,7 +184,8 @@ class MySQL {
         try {
             const users = await this.getAllUsers(User)
             const games = await this.getAllGames(Game)
-            // console.log(users, games)
+            console.log(users, games)
+
 
             const usersBestGames = []
 
@@ -214,12 +215,14 @@ class MySQL {
                         usersBestGames.push(bestGame)
                     }
                 }
+                usersBestGames.sort(this.sortUsersGames)
+                // console.log(usersBestGames)
+    
+                return usersBestGames
+            
+            } else {
+                return null
             }
-
-            usersBestGames.sort(this.sortUsersGames)
-            // console.log(usersBestGames)
-
-            return usersBestGames
 
         } catch (err) {
             throw err
