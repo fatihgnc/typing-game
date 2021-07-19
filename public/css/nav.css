@@ -1,0 +1,103 @@
+.current-user {
+  position: absolute;
+  top: 2%;
+  left: 2%;
+  border-bottom: thin solid #a4a4a4;
+  padding: 7.5px;
+  letter-spacing: 2px;
+  font-size: 20px;
+}
+
+.logo {
+  border-radius: 15px;
+  position: absolute;
+  top: 1.5%;
+  left: 45%;
+  letter-spacing: 3px;
+  text-decoration: none;
+  padding: 15px;
+  box-shadow: 0px 0px 15px 1px rgba(214, 133, 92, 0.75);
+  color: khaki;
+}
+
+/* ----MENU---- */
+.menu-icon {
+  position: absolute;
+  top: 2%;
+  right: 2%;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: initial;
+  gap: 0rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 12px;
+  box-shadow: 0px 0px 1px white;
+}
+.menu-icon:hover {
+  background: white;
+}
+.menu-icon:hover svg {
+  fill: black;
+}
+.menu-icon svg {
+  fill: white;
+  transition: fill 0.2s ease;
+}
+
+.menu {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.97);
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: initial;
+  gap: 0rem;
+}
+
+.close-menu-icon {
+  display: inline-block;
+  padding: 1em;
+  text-align: center;
+  position: absolute;
+  top: 3%;
+  right: 3%;
+  color: white;
+  font-size: 1.3em;
+  cursor: pointer;
+}
+
+.menu-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+  gap: 1em;
+  width: 40%;
+}
+.menu-buttons a {
+  text-decoration: none;
+  text-align: center;
+  color: white;
+  font-size: 2em;
+  transition: border-bottom 0.2s ease;
+}
+.menu-buttons a:hover {
+  border-bottom: thick solid white;
+}
+
+@media screen and (max-width: 500px) {
+  a {
+    font-size: 1.5em;
+  }
+}
+/* ----MENU END---- */
+
+/*# sourceMappingURL=nav.css.map */
