@@ -10,6 +10,18 @@
     font-size: 20px;
 }
 
+.logo {
+    border-radius: 15px;
+    position: absolute;
+    top: 1.5%;
+    left: 45%;
+    letter-spacing: 3px;
+    text-decoration: none;
+    padding: 15px;
+    box-shadow: 0px 0px 15px 1px hsla(20, 60%, 60%, .75);
+    color: khaki;
+}
+
 /* ----MENU---- */
 .menu-icon {
     position: absolute;
