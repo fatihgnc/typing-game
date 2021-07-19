@@ -2,11 +2,13 @@
 @import './partials/initial';
 
 .redirect-msg {
-    padding: .75em;
+    border-bottom: thin solid hsl(20, 60%, 60%);
     text-align: center;
-    text-decoration: underline;
     font-weight: 600;
     font-size: 1.2rem;
+    letter-spacing: 2px;
+    padding-bottom: 5px;
+    color: hsl(20, 60%, 60%);
     margin: 0 auto;
 }
 
@@ -122,8 +124,8 @@
         }
 
         .registration__status-msg {
+            display: none;
             max-width: 330px;
-            opacity: 0;
             margin-top: 1rem;
             padding: 1rem;
             transition: opacity .2s ease-in-out;

@@ -44,6 +44,10 @@ class MySQL {
      */
     async insertUser(User, username) {
         try {
+            
+            if(!username || username.length < 3 || username.length > 15) {
+                throw new Error('Username value should be between 3-15 characters!')
+            }
             const user = User.build({ username })
             await user.save()
             console.log(chalk.greenBright('User saved to database succesfully.'))
@@ -66,7 +70,8 @@ class MySQL {
             const user = await User.findAll({ where: { username }, limit: 1 })
 
             if (!user.length) {
-                return console.log(chalk.red(`User with username: ${username} is not found in database.`))
+                console.log(chalk.red(`User with username: ${username} is not found in database.`))
+                return null
             }
 
             return user
@@ -87,7 +92,8 @@ class MySQL {
             const users = await User.findAll()
 
             if (!users.length) {
-                return console.log(chalk.red('There is no user record in database.'))
+                console.log(chalk.red('There is no user record in database.'))
+                return null
             }
 
             return users
@@ -108,7 +114,8 @@ class MySQL {
             const games = await Game.findAll()
 
             if (!games.length) {
-                return console.log(chalk.red('There is no game record in database.'))
+                console.log(chalk.red('There is no game record in database.'))
+                return null
             }
 
             return games
@@ -184,8 +191,7 @@ class MySQL {
         try {
             const users = await this.getAllUsers(User)
             const games = await this.getAllGames(Game)
-            console.log(users, games)
-
+            // console.log(users, games)
 
             const usersBestGames = []
 
@@ -217,12 +223,10 @@ class MySQL {
                 }
                 usersBestGames.sort(this.sortUsersGames)
                 // console.log(usersBestGames)
-    
                 return usersBestGames
-            
-            } else {
-                return null
-            }
+            } 
+
+            return null
 
         } catch (err) {
             throw err

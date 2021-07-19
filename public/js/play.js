@@ -77,8 +77,8 @@ $(function () {
 
     // CHECKING WORD INPUT
     function checkInput(input, target, elem) {
-        console.log(input, target)
-        if (input.trim() === target.trim()) {
+        // console.log(input, target)
+        if (input.trim().toLowerCase() === target.trim()) {
             elem.css('color', 'yellowgreen')
             correctCount++
         } else {
@@ -175,17 +175,20 @@ $(function () {
 
     // ACTUAL KEYUP EVENT
     wordInput.on('keyup', e => {
+        // for android phones, i had to detect the pressed key in a different way
+        const androidKey = e.target.value.charAt(e.target.selectionStart-1).charCodeAt()
+        
         // here we are checking if the space bar is pressed
         // and if the current word is the last word in the current party of the words
         // if so, we load the next 4 words and check the input 
-        if (e.keyCode === 32 && currentWordIndex === 3) {
+        if ((e.keyCode === 32 || androidKey === 32) && currentWordIndex === 3) {
             const currentWord = wordSpan.find('span').eq(currentWordIndex)
             checkInput(wordInput.val(), currentWord.text(), currentWord)
             loadNextWords()
             currentWordIndex = 0
         } // and here if space bar is pressed but  
         // the word is not the last word in the current party of the words
-        else if (e.keyCode === 32) {
+        else if (e.keyCode === 32 || androidKey === 32) {
             const currentWord = wordSpan.find('span').eq(currentWordIndex)
             const nextWord = wordSpan.find('span').eq(++currentWordIndex)
             checkInput(wordInput.val(), currentWord.text(), currentWord)

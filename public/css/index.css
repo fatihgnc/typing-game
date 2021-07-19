@@ -19,11 +19,13 @@ body {
 }
 
 .redirect-msg {
-  padding: 0.75em;
+  border-bottom: thin solid #d6855c;
   text-align: center;
-  text-decoration: underline;
   font-weight: 600;
   font-size: 1.2rem;
+  letter-spacing: 2px;
+  padding-bottom: 5px;
+  color: #d6855c;
   margin: 0 auto;
 }
 
@@ -129,8 +131,8 @@ body {
   background: #545454;
 }
 .container .registration .registration__status-msg {
+  display: none;
   max-width: 330px;
-  opacity: 0;
   margin-top: 1rem;
   padding: 1rem;
   transition: opacity 0.2s ease-in-out;

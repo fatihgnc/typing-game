@@ -40,7 +40,7 @@
             })
         }
 
-        // if a user directly goes to /play with some username in the query string, i make sure 
+        // if a user directly goes to /play with some username value in the query string, i make sure 
         // that it gets saved in the database
         const user = await db.getSingleUser(User, username)
 

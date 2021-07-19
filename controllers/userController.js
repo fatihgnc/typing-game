@@ -10,7 +10,7 @@
             
         } catch (err) {          
             // console.log(err)                   
-            res.status(400).send(err.errors[0].message)
+            res.status(400).send(err || err.errors[0].message)
         }
     }
 

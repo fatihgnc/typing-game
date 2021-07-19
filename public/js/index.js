@@ -5,9 +5,14 @@ $(function () {
     const $inputUsername = $registrationForm.find('#registration__username')
     const $registrationSubmitButton = $registrationForm.find('#registration__submit')
     const $registrationStatusMessageElem = $registrationForm.find('.registration__status-msg')
+    const $redirectMsgSpan = $('.redirect-msg')
     const $successMessage = 'Succesfully registered, you will be redirected to game page in 3 seconds...'
     const $failureColor = '#744747'
     const headerToDisplay = 'How fast can you type?'.split('')
+
+    if ($redirectMsgSpan) {
+        setTimeout(() => $redirectMsgSpan.hide(), 3000)
+    }
 
     function typeWriterAnimation(header) {
         let i = 0
@@ -34,21 +39,31 @@ $(function () {
     })
 
     // ajax call to /user/add
-    function addUser(statusMsg) {
+    function addUser(statusMsgElem) {
         const $username = $inputUsername.val()
         const currUsername = localStorage.getItem('username')
 
-        if(currUsername) {
-            statusMsg.text('you should log out first!')
-            statusMsg.css({
+        if (currUsername) {
+            statusMsgElem.text('you should log out first!')
+            statusMsgElem.css({
                 background: $failureColor,
-                opacity: 1
+                display: 'block'
             })
 
             return
         }
 
-        localStorage.setItem('username', $username)
+        if ($username.length >= 3 && $username.length <= 15) {
+            localStorage.setItem('username', $username)
+        } else {
+            statusMsgElem.text('username must be between 3-15 characters')
+            statusMsgElem.css({
+                background: $failureColor,
+                display: 'block'
+            })
+
+            return
+        }
 
         $.post({
             url: '/user/add',
@@ -56,27 +71,30 @@ $(function () {
             data: { username: $username },
             success: (data, status, jqxhr) => {
                 // console.log(status)
-                statusMsg.text($successMessage)
-                statusMsg.css({
+                statusMsgElem.text($successMessage)
+                statusMsgElem.css({
                     background: 'gray',
-                    opacity: 1
+                    display: 'block'
                 })
                 setTimeout(() => window.location.href = `/play?username=${$username}`, 3000)
             },
             error: (jqxhr, status, err) => {
                 // console.log(status)
                 const $failureMessage = jqxhr.responseText
-                statusMsg.text($failureMessage)
-                statusMsg.css({
+                statusMsgElem.text($failureMessage)
+                statusMsgElem.css({
                     background: $failureColor,
-                    opacity: 1
+                    display: 'block'
                 })
             }
         })
     }
-    
+
     $registrationSubmitButton.on('click', e => {
         e.preventDefault()
         addUser($registrationStatusMessageElem)
+        if ($registrationStatusMessageElem.text()) {
+            setTimeout(() => $registrationStatusMessageElem.css('display', 'none'), 3000)
+        }
     })
 })
