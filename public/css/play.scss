@@ -58,16 +58,56 @@
         cursor: not-allowed;
     }
 
-    .score {
-        font-weight: 600;
+    
+    @media screen and (max-width: 600px) {
+        .target-words {
+            font-size: 1.1rem;
+        }
+        
+        #wordInput,
+        .game-over-msg {
+            padding: 15px 30px;
+            font-size: 1rem;
+        }
+        
+        .timer {
+            width: 65px;
+            height: 65px;
+        }
+        
+        .instruction {
+            font-size: 1rem;
+        }
+    }
+    
+    @media screen and (max-width: 450px) {
+        .target-words {
+            font-size: 1.05rem;
+        }
+
+        #wordInput,
+        .game-over-msg {
+            padding: 10px 24px;
+            font-size: .9rem;
+        }
+
+        .timer {
+            width: 60px;
+            height: 60px;
+            font-size: 1.1rem;
+        }
+
+        .instruction {
+            font-size: .8rem;
+        }
     }
 
+    // ======GAME OVER CONTAINER==========
     .game-over-container,
     .game-over__buttons {
         @include flex($align: center, $justify: center, $dir: column, $gap: 1.5rem);
     }
 
-    // ======GAME OVER CONTAINER==========
     .game-over-container {
         width: 100%;
         padding: 1em;

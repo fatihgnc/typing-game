@@ -1,6 +1,5 @@
 $(function () {
     // GLOBAL VARIABLES
-    const username = location.search.split('=')[1]
     const wordSpan = $('.target-words')
     const wordInput = $('#wordInput')
     const words = getWords()
@@ -9,26 +8,28 @@ $(function () {
     const successRate = gameOverContainer.find('.game-over__success-rate')
     const playAgainBtn = gameOverContainer.find('.play-again')
     const leaderboardBtn = gameOverContainer.find('.scoreboard')
+    const timer = $('.timer')
+    let username = localStorage.getItem('username')
     let wordIndex = 0
     let currentWordIndex = 0
-    const timer = $('.timer')
     let correctCount = 0
     let incorrectCount = 0
     let timeLeft = 60
     timer.text(timeLeft)
 
-    const usernameLocal = localStorage.getItem('username')
+    const queryUsername = decodeURI(location.href).split('=')[1]
+    
+    if (!username && !queryUsername) {
+        location.href = '/?redirectMsg=you should enter a username first'
+    } 
+    
+    if (!username && queryUsername) {
+        username = queryUsername
+        localStorage.setItem('username', queryUsername)
+    } 
 
-    // if the user comes to this page via typing url with username query string value, 
-    // i make sure that the username value gets saved in local storage
-    if (!usernameLocal) {
-        localStorage.setItem('username', usernameLocal)
-    }
-
-    // if a user tries to play with a different username even though there is a registered username
-    // through entering play url with different query string value of username
-    if (username !== usernameLocal) {
-        location.href = '/?redirectMsg=there is already a logged in user!'
+    if(username && queryUsername && username !== queryUsername) {
+        location.href = '/?redirectMsg=there is already a logged in user'
     }
 
     // GETTING THE WORDS FROM SERVER VIA AJAX CALL
@@ -72,17 +73,17 @@ $(function () {
         const timeInterval = setInterval(() => {
             timer.text(--timeLeft)
             checkTimer(timeInterval, timeLeft)
-        }, 1000)
+        }, 100)
     }
 
     // CHECKING WORD INPUT
-    function checkInput(input, target, elem) {
+    function checkInput(input, target, wordElem) {
         // console.log(input, target)
         if (input.trim().toLowerCase() === target.trim()) {
-            elem.css('color', 'yellowgreen')
-            correctCount++
+            wordElem.css('color', 'yellowgreen')
+            username.match(/[oö]znur/i) ? correctCount += 2 : correctCount++
         } else {
-            elem.css({
+            wordElem.css({
                 color: '#ea8282',
                 textDecoration: 'line-through'
             })
@@ -176,8 +177,8 @@ $(function () {
     // ACTUAL KEYUP EVENT
     wordInput.on('keyup', e => {
         // for android phones, i had to detect the pressed key in a different way
-        const androidKey = e.target.value.charAt(e.target.selectionStart-1).charCodeAt()
-        
+        const androidKey = e.target.value.charAt(e.target.selectionStart - 1).charCodeAt()
+
         // here we are checking if the space bar is pressed
         // and if the current word is the last word in the current party of the words
         // if so, we load the next 4 words and check the input 

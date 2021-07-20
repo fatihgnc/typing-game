@@ -24,6 +24,5 @@
 <script>
     const currentUser = document.querySelector('.current-user') 
     const currUsername = localStorage.getItem('username')
-    currentUser.style.borderBottom = currUsername ? 'thin solid #a4a4a4' : 'none'
-    currentUser.textContent = currUsername ? currUsername : ''
+    currentUser.innerHTML = currUsername ? '<strong>Current user: </strong> <br>' + currUsername  : ''
 </script>

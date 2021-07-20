@@ -41,41 +41,33 @@ $(function () {
     // ajax call to /user/add
     function addUser(statusMsgElem) {
         const $username = $inputUsername.val()
-        const currUsername = localStorage.getItem('username')
-
-        if (currUsername) {
-            statusMsgElem.text('you should log out first!')
-            statusMsgElem.css({
-                background: $failureColor,
-                display: 'block'
-            })
-
-            return
-        }
-
-        if ($username.length >= 3 && $username.length <= 15) {
-            localStorage.setItem('username', $username)
-        } else {
-            statusMsgElem.text('username must be between 3-15 characters')
-            statusMsgElem.css({
-                background: $failureColor,
-                display: 'block'
-            })
-
-            return
-        }
 
         $.post({
             url: '/user/add',
             method: 'POST',
             data: { username: $username },
             success: (data, status, jqxhr) => {
+                const currUser = localStorage.getItem('username')
+
+                if(!currUser) {
+                    localStorage.setItem('username', $username)
+                } else {
+                    statusMsgElem.text('you should log out first')
+                    statusMsgElem.css({
+                        background: $failureColor,
+                        display: 'block'
+                    })
+                    
+                    return
+                }
+                
                 // console.log(status)
                 statusMsgElem.text($successMessage)
                 statusMsgElem.css({
                     background: 'gray',
                     display: 'block'
                 })
+
                 setTimeout(() => window.location.href = `/play?username=${$username}`, 3000)
             },
             error: (jqxhr, status, err) => {
