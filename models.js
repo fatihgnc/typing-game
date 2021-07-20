@@ -55,7 +55,7 @@ module.exports = async function () {
     User.hasMany(Game, { constraints: false })
     Game.belongsTo(User)
 
-    await db.sequelize.sync({ force: true })
+    await db.sequelize.sync()
     console.log(chalk.greenBright('synced all models'))
 
     return { User, Game, db }
