@@ -19,7 +19,6 @@ body {
 }
 
 .redirect-msg {
-  border-bottom: thin solid #d6855c;
   text-align: center;
   font-weight: 600;
   font-size: 19.2px;
@@ -178,7 +177,7 @@ body {
   }
 
   .container {
-    gap: 24px;
+    gap: 28.8px;
   }
 
   ::placeholder {

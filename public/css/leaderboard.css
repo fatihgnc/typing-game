@@ -37,6 +37,12 @@ body {
   padding: 15px 5px;
   text-align: center;
 }
+@media screen and (max-width: 500px) {
+  .ranking th,
+.ranking td {
+    font-size: 12px;
+  }
+}
 .ranking tbody tr:nth-child(1) td {
   color: gold;
 }
