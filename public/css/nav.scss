@@ -13,8 +13,9 @@
 .logo {
     border-radius: 15px;
     position: absolute;
-    top: 1.5%;
-    left: 45%;
+    top: 3%;
+    left: 50%;
+    transform: translateX(-50%);
     letter-spacing: 3px;
     text-decoration: none;
     padding: 15px;
@@ -89,7 +90,7 @@
 }
 
 @media screen and (max-width: 500px) {
-    a {
+    .menu-buttons a {
         font-size: 1.5em;
     }
 }
