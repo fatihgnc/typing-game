@@ -25,6 +25,13 @@ $bronze-color: #b08d57;
         text-align: center;
     }
 
+    @media screen and (max-width: 500px) {
+        th, 
+        td {
+            font-size: 12px;
+        }
+    }
+
     tbody {
         tr:nth-child(1) {
             td {

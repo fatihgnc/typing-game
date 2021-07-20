@@ -8,7 +8,7 @@ Array.prototype.hasMost = function (attr, attr2) {
         acc[attr] = acc[attr] || 0
         acc[attr2] = acc[attr2] || 0
 
-        if (curr[attr] + (curr[attr2] / 10) > acc[attr] + (acc[attr2] / 10)) {
+        if (curr[attr] + (curr[attr2] / 10) >= acc[attr] + (acc[attr2] / 10)) {
             acc = { ...curr }
         }
 
@@ -44,10 +44,6 @@ class MySQL {
      */
     async insertUser(User, username) {
         try {
-            
-            if(!username || username.length < 3 || username.length > 15) {
-                throw new Error('Username value should be between 3-15 characters!')
-            }
             const user = User.build({ username })
             await user.save()
             console.log(chalk.greenBright('User saved to database succesfully.'))

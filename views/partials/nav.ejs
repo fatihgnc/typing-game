@@ -14,9 +14,9 @@
 <div class="menu">
     <span class="close-menu-icon">x</span>
     <div class="menu-buttons">
-        <a href="/">home</a>
-        <a>play</a>
-        <a href="/play/leaderboard">leaderboard</a>
+        <a href="/">ana sayfa</a>
+        <a>oyna</a>
+        <a href="/play/leaderboard">sıralama</a>
     </div>
 </div>
 <!-- menu end -->
@@ -24,5 +24,5 @@
 <script>
     const currentUser = document.querySelector('.current-user') 
     const currUsername = localStorage.getItem('username')
-    currentUser.innerHTML = currUsername ? '<strong>Current user: </strong> <br>' + currUsername  : ''
+    currentUser.innerHTML = currUsername ? '<strong>Kullanıcı: </strong> <br>' + currUsername  : ''
 </script>

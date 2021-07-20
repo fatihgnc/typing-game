@@ -20,16 +20,16 @@ $(function () {
     const queryUsername = decodeURI(location.href).split('=')[1]
     
     if (!username && !queryUsername) {
-        location.href = '/?redirectMsg=you should enter a username first'
+        location.href = '/?redirectMsg=önce kullanıcı adı girmeniz gerekmekte!'
     } 
     
     if (!username && queryUsername) {
         username = queryUsername
-        localStorage.setItem('username', queryUsername)
+        localStorage.setItem('username', username)
     } 
 
     if(username && queryUsername && username !== queryUsername) {
-        location.href = '/?redirectMsg=there is already a logged in user'
+        location.href = '/?redirectMsg=zaten giriş yapmış bir kullanıcı var!'
     }
 
     // GETTING THE WORDS FROM SERVER VIA AJAX CALL
@@ -73,7 +73,7 @@ $(function () {
         const timeInterval = setInterval(() => {
             timer.text(--timeLeft)
             checkTimer(timeInterval, timeLeft)
-        }, 1000)
+        }, 100)
     }
 
     // CHECKING WORD INPUT
@@ -108,9 +108,9 @@ $(function () {
 
         const _successRate = calculateSuccessPercentage(correctCount, incorrectCount)
         successRate.append(`
-                you did 
+                doğru sayınız: 
                 <strong style="color: black;">${correctCount}/${correctCount + incorrectCount}</strong> , 
-                which is 
+                ki bu da: 
                 <strong style="color: black;">${_successRate}%</strong>
             `)
 
@@ -133,18 +133,12 @@ $(function () {
     // UPDATING THE CORRESPONDING USER INFO VIA AJAX CALL
     function saveGameData(username, correct, incorrect, percentage) {
         $.ajax({
-            method: 'PUT',
+            method: 'POST',
             url: `/user/saveGameData?username=${username}`,
             data: {
                 correct,
                 incorrect,
                 percentage
-            },
-            success(data, status, jqxhr) {
-                console.log(data, status)
-            },
-            error(jqxhr, status, err) {
-                console.log(status, err)
             }
         })
     }

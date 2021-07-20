@@ -6,9 +6,9 @@ $(function () {
     const $registrationSubmitButton = $registrationForm.find('#registration__submit')
     const $registrationStatusMessageElem = $registrationForm.find('.registration__status-msg')
     const $redirectMsgSpan = $('.redirect-msg')
-    const $successMessage = 'Succesfully registered, you will be redirected to game page in 3 seconds...'
+    const $successMessage = 'Kayıt başarılı, 3 saniye içinde oyun sayfasına yönlendirileceksiniz..'
     const $failureColor = '#744747'
-    const headerToDisplay = 'How fast can you type?'.split('')
+    const headerToDisplay = 'Ne kadar hızlı yazabilirsin?'.split('')
 
     if ($redirectMsgSpan) {
         setTimeout(() => $redirectMsgSpan.hide(), 3000)
@@ -41,6 +41,14 @@ $(function () {
     // ajax call to /user/add
     function addUser(statusMsgElem) {
         const $username = $inputUsername.val()
+        if($username.length < 3 || $username.length > 15) {
+            statusMsgElem.text('kullanıcı adı 3-15 karaktere sahip olabilir!')
+            statusMsgElem.css({
+                display: 'block',
+                background: $failureColor
+            })
+            return
+        } 
 
         $.post({
             url: '/user/add',
@@ -52,7 +60,7 @@ $(function () {
                 if(!currUser) {
                     localStorage.setItem('username', $username)
                 } else {
-                    statusMsgElem.text('you should log out first')
+                    statusMsgElem.text('önce çıkış yapmanız gerek')
                     statusMsgElem.css({
                         background: $failureColor,
                         display: 'block'

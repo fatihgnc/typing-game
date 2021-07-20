@@ -27,16 +27,16 @@
         // we check here that there is a username value in the query string
         if (!username) {
             return res.render('index.ejs', {
-                title: 'Home',
-                redirectMsg: 'You should enter a username first!'
+                title: 'Ana sayfa',
+                redirectMsg: 'önce kullanıcı adı girmeniz gerekmekte!'
             })
         }
 
         // validation
         if(username.length < 3 || username.length > 15) {
             return res.render('index.ejs', {
-                title: 'Home',
-                redirectMsg: 'Username must be between 3-15 characters!'
+                title: 'Ana sayfa',
+                redirectMsg: 'kullanıcı adı 3-15 karaktere sahip olabilir!'
             })
         }
 
@@ -75,6 +75,7 @@
                 title: 'Leaderboard',
                 games
             })
+
         } catch (err) {
             res.status(500).send(err)
         }

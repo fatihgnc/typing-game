@@ -6,7 +6,7 @@ router
     .post('/add', async (req, res) => {
         await userController.insertUser(req, res)
     })
-    .put('/saveGameData', async (req, res) => {
+    .post('/saveGameData', async (req, res) => {
         await userController.insertUsersGameData(req, res)
     })
 

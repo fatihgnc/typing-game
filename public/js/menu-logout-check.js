@@ -5,9 +5,9 @@ $(function () {
 
     if (localUsername) {
         const logoutAnchor = document.createElement('a')
-        const textNode = document.createTextNode('log out')
+        const textNode = document.createTextNode('çıkış yap')
         logoutAnchor.appendChild(textNode)
-        logoutAnchor.setAttribute('href', '/?redirectMsg=you logged out succesfully')
+        logoutAnchor.setAttribute('href', '/?redirectMsg=başarıyla çıkış yapıldı!')
         menuButtons.appendChild(logoutAnchor)
         logoutAnchor.addEventListener('click', () => localStorage.removeItem('username'))
         playButton.setAttribute('href', `/play?username=${localUsername}`)
