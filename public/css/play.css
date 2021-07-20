@@ -70,8 +70,40 @@ body {
   background: rgba(52, 52, 52, 0.55);
   cursor: not-allowed;
 }
-.container .score {
-  font-weight: 600;
+@media screen and (max-width: 600px) {
+  .container .target-words {
+    font-size: 1.1rem;
+  }
+  .container #wordInput,
+.container .game-over-msg {
+    padding: 15px 30px;
+    font-size: 1rem;
+  }
+  .container .timer {
+    width: 65px;
+    height: 65px;
+  }
+  .container .instruction {
+    font-size: 1rem;
+  }
+}
+@media screen and (max-width: 450px) {
+  .container .target-words {
+    font-size: 1.05rem;
+  }
+  .container #wordInput,
+.container .game-over-msg {
+    padding: 10px 24px;
+    font-size: 0.9rem;
+  }
+  .container .timer {
+    width: 60px;
+    height: 60px;
+    font-size: 1.1rem;
+  }
+  .container .instruction {
+    font-size: 0.8rem;
+  }
 }
 .container .game-over-container,
 .container .game-over__buttons {

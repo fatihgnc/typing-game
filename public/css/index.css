@@ -22,13 +22,18 @@ body {
   border-bottom: thin solid #d6855c;
   text-align: center;
   font-weight: 600;
-  font-size: 1.2rem;
+  font-size: 19.2px;
   letter-spacing: 2px;
-  padding-bottom: 5px;
+  padding-bottom: 2px;
   color: #d6855c;
   margin: 0 auto;
 }
 
+@media screen and (max-width: 600px) {
+  .redirect-msg {
+    font-size: 16px;
+  }
+}
 .container {
   display: flex;
   align-items: initial;
@@ -38,7 +43,7 @@ body {
   width: 100%;
 }
 .container .cta-header {
-  font-size: 4rem;
+  font-size: 64px;
   font-weight: 400;
   letter-spacing: 3px;
   text-align: center;
@@ -68,7 +73,7 @@ body {
   background: none;
   border: none;
   letter-spacing: 1.5px;
-  font-size: 1.3rem;
+  font-size: 20.8px;
   font-weight: 300;
   cursor: pointer;
   box-shadow: 0px 0px 1px white;
@@ -92,17 +97,27 @@ body {
 }
 @media screen and (max-width: 1200px) {
   .container .cta-header {
-    font-size: 3rem;
+    font-size: 48px;
   }
 }
 @media screen and (max-width: 750px) {
   .container .cta-header {
-    font-size: 1.5rem;
+    font-size: 24px;
   }
   .container .cta-btn {
-    padding: 0.75rem;
+    padding: 12px;
     width: 60%;
-    font-size: 1.1rem;
+    font-size: 17.6px;
+  }
+}
+@media screen and (max-width: 500px) {
+  .container .cta-header {
+    font-size: 20.8px;
+  }
+  .container .cta-btn {
+    padding: 8px;
+    width: 60%;
+    font-size: 16px;
   }
 }
 .container .registration {
@@ -112,18 +127,18 @@ body {
   text-align: center;
   transition: all 0.5s ease;
 }
-.container .registration #registration__username {
-  padding: 1em;
+.container .registration #registration__username,
+.container .registration #registration__submit {
+  padding: 16px;
+  font-size: 16px;
   border: none;
+}
+.container .registration #registration__username {
   outline: none;
-  font-size: 1rem;
   color: #242424;
 }
 .container .registration #registration__submit {
-  border: none;
-  padding: 1rem;
   background: gray;
-  font-size: 1rem;
   cursor: pointer;
   transition: background 0.2s ease-in-out;
 }
@@ -133,23 +148,43 @@ body {
 .container .registration .registration__status-msg {
   display: none;
   max-width: 330px;
-  margin-top: 1rem;
-  padding: 1rem;
+  margin-top: 16px;
+  padding: 16px;
   transition: opacity 0.2s ease-in-out;
 }
+
 @media screen and (max-width: 750px) {
-  .container .registration .registration__status-msg {
-    max-width: 230px;
+  .registration .registration__status-msg {
+    max-width: 210px;
     text-align: center;
-    margin: 0.5rem auto 0;
+    margin: 8px auto 0;
   }
-  .container .registration #registration__submit {
-    margin-top: 0.5rem;
+
+  .registration #registration__submit {
+    margin-top: 8px;
     width: 100%;
-    max-width: 230px;
+    max-width: 210px;
   }
 }
+@media screen and (max-width: 500px) {
+  .registration .registration__status-msg,
+.registration #registration__username {
+    max-width: 210px !important;
+  }
 
+  .registration #registration__submit,
+.registration #registration__username {
+    padding: 8px !important;
+  }
+
+  .container {
+    gap: 24px;
+  }
+
+  ::placeholder {
+    font-size: 14.4px;
+  }
+}
 @keyframes blinkTextCursor {
   from {
     border-right-color: rgba(0, 0, 0, 0.75);

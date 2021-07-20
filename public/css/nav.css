@@ -1,24 +1,27 @@
 .current-user {
   position: absolute;
   top: 2%;
-  left: 2%;
-  border-bottom: thin solid #a4a4a4;
+  left: 50%;
+  transform: translateX(-50%);
   padding: 7.5px;
   letter-spacing: 2px;
   font-size: 20px;
+  color: #d6855c;
+}
+.current-user strong {
+  color: #d6855c;
 }
 
 .logo {
   border-radius: 15px;
   position: absolute;
   top: 3%;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 3%;
   letter-spacing: 3px;
   text-decoration: none;
   padding: 15px;
   box-shadow: 0px 0px 15px 1px rgba(214, 133, 92, 0.75);
-  color: khaki;
+  color: burlywood;
 }
 
 /* ----MENU---- */
@@ -48,6 +51,33 @@
   transition: fill 0.2s ease;
 }
 
+@media screen and (max-width: 600px) {
+  .menu-icon {
+    padding: 8px;
+    top: 3%;
+    right: 5%;
+  }
+
+  .logo {
+    font-size: 13px;
+  }
+
+  .current-user {
+    top: 3%;
+    left: 55%;
+    font-size: 13px;
+  }
+}
+@media screen and (max-width: 450px) {
+  .logo {
+    font-size: 11px;
+  }
+
+  .current-user {
+    font-size: 11px;
+    margin-left: 15px;
+  }
+}
 .menu {
   position: absolute;
   left: 0;
