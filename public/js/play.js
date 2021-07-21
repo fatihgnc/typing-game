@@ -74,7 +74,7 @@ $(function () {
         const timeInterval = setInterval(() => {
             timer.text(--timeLeft)
             checkTimer(timeInterval, timeLeft)
-        }, 100)
+        }, 1000)
     }
 
     // CHECKING WORD INPUT
