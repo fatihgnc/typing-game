@@ -2,6 +2,7 @@ $(function () {
     // GLOBAL VARIABLES
     const wordSpan = $('.target-words')
     const wordInput = $('#wordInput')
+    const instructions = $('.instructions')
     const words = getWords()
     const gameOverMsg = $('.game-over-msg')
     const gameOverContainer = $('.game-over-container')
@@ -73,7 +74,7 @@ $(function () {
         const timeInterval = setInterval(() => {
             timer.text(--timeLeft)
             checkTimer(timeInterval, timeLeft)
-        }, 1000)
+        }, 100)
     }
 
     // CHECKING WORD INPUT
@@ -103,6 +104,7 @@ $(function () {
 
         wordInput.css('display', 'none')
         wordInput.next('span').css('display', 'none')
+        instructions.css('display', 'none')
         gameOverMsg.css('display', 'inline-block')
         gameOverContainer.css('display', 'flex')
 
@@ -155,6 +157,7 @@ $(function () {
         gameOverMsg.css('display', 'none')
         wordInput.css('display', 'block')
         wordInput.next('span').css('display', 'inline-block')
+        instructions.css('display', 'block')
         successRate.empty()
         loadNextWords()
         wordInput.one('keyup', startTimer)

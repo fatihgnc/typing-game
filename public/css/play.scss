@@ -3,7 +3,7 @@
 
 // ========CONTAINER=========
 .container {
-    @include flex(flex, center, center, column, 2rem);
+    @include flex(flex, center, center, column, 1.5rem);
     width: 100% !important;
     padding: 5rem 2rem;
     background: rgba(255, 255, 255, .20);
@@ -37,80 +37,64 @@
         font-weight: 200;
     }
 
-    #wordInput,
-    .game-over-msg {
-        padding: 15px 35px;
-        max-width: 200px;
-        font-weight: 200;
-    }
-
     #wordInput {
-        background: #000;
+        color: black;
+        background: rgba(255, 255, 255, .5);
+        max-width: 200px;
+        padding: 15px 35px;
         position: relative;
         outline: none;
         border: none;
-        font-size: 1rem;
+        font-weight: 400;
+        font-size: 16px;
     }
-
-    .game-over-msg {
-        display: none;
-        background: rgba(#343434, .55);
-        cursor: not-allowed;
-    }
-
     
     @media screen and (max-width: 600px) {
         .target-words {
-            font-size: 1.1rem;
+            font-size: 17.6px;
         }
         
-        #wordInput,
-        .game-over-msg {
+        #wordInput {
             padding: 15px 30px;
-            font-size: 1rem;
+            font-size: 16px;
         }
         
         .timer {
             width: 65px;
             height: 65px;
         }
-        
-        .instruction {
-            font-size: 1rem;
-        }
     }
     
     @media screen and (max-width: 450px) {
         .target-words {
-            font-size: 1.05rem;
+            font-size: 16.8px;
         }
 
-        #wordInput,
-        .game-over-msg {
+        #wordInput {
             padding: 10px 24px;
-            font-size: .9rem;
+            font-size: 14.4px;
         }
 
         .timer {
             width: 60px;
             height: 60px;
-            font-size: 1.1rem;
+            font-size: 17.6px;
         }
 
-        .instruction {
-            font-size: .8rem;
+        .instructions {
+            font-size: 12.8px;
         }
     }
 
     // ======GAME OVER CONTAINER==========
     .game-over-container,
     .game-over__buttons {
-        @include flex($align: center, $justify: center, $dir: column, $gap: 1.5rem);
+        @include flex($align: center, $justify: center, $dir: column, $gap: 24px);
     }
 
     .game-over-container {
         width: 100%;
-        padding: 1em;
+        padding: 16px;
         display: none;
         transition: display .2s;
 
@@ -121,7 +105,7 @@
             .play-again {
                 border: thin solid #848484;
                 max-width: 200px;
-                padding: .5rem 1rem;
+                padding: 8px 16px;
                 border-radius: 5px;
                 cursor: pointer;
                 transition: all .2s ease;
@@ -141,12 +125,12 @@
 
 .current-target {
     background: rgba(#af8e8e, .5);
-    padding: .25rem;
+    padding: 4px;
 }
 
 ::placeholder {
-    color: #fff;
-    font-weight: 200;
+    font-weight: 400;
+    color: black;
 }
 
 @media screen and (max-width: 700px) {
