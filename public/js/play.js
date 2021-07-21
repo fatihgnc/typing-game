@@ -18,22 +18,23 @@ $(function () {
     let timeLeft = 60
     timer.text(timeLeft)
 
+    // Checks
     const queryUsername = decodeURI(location.href).split('=')[1]
-    
+
     if (!username && !queryUsername) {
         location.href = '/?redirectMsg=önce kullanıcı adı girmeniz gerekmekte!'
-    } 
-    
+    }
+
     if (!username && queryUsername) {
         username = queryUsername
         localStorage.setItem('username', username)
-    } 
+    }
 
-    if(username && queryUsername && username !== queryUsername) {
+    if (username && queryUsername && username !== queryUsername) {
         location.href = '/?redirectMsg=zaten giriş yapmış bir kullanıcı var!'
     }
 
-    // GETTING THE WORDS FROM SERVER VIA AJAX CALL
+    // Getting the words from server via ajax.
     function getWords() {
         let wordsToFetch = []
 
@@ -51,7 +52,7 @@ $(function () {
         return wordsToFetch
     }
 
-    // NEXT 4 WORDS TO LOAD INTO THE WORD SPAN ELEMENT
+    // Next 4 words to load into the word span element. 
     function loadNextWords() {
         wordSpan.empty()
 
@@ -69,7 +70,7 @@ $(function () {
         wordIndex += 4
     }
 
-    // STARTING TIMER
+    // Starting timer.
     function startTimer() {
         const timeInterval = setInterval(() => {
             timer.text(--timeLeft)
@@ -77,12 +78,22 @@ $(function () {
         }, 1000)
     }
 
-    // CHECKING WORD INPUT
+    // Checking the timer, if it's over we call game over function.
+    function checkTimer(interval, remainingTime) {
+        const isGameOver = remainingTime <= 0 ? true : false
+        if (isGameOver) gameOver(interval)
+    }
+
+    // Checking word input.
     function checkInput(input, target, wordElem) {
         // console.log(input, target)
         if (input.trim().toLowerCase() === target.trim()) {
             wordElem.css('color', 'yellowgreen')
-            username.match(/[oö]znur/i) ? correctCount += 2 : correctCount++
+            // bonus for my gf XD
+            const regex = /[oö]znur/i
+            regex.test(username) ? correctCount += 2 : correctCount++
+            timer.text(++timeLeft)
+
         } else {
             wordElem.css({
                 color: '#ea8282',
@@ -92,13 +103,7 @@ $(function () {
         }
     }
 
-    // CHECKING THE TIMER, IF IT'S OVER WE CALL GAMEOVER FUNCTION
-    function checkTimer(interval, remainingTime) {
-        const isGameOver = remainingTime <= 0 ? true : false
-        if (isGameOver) gameOver(interval)
-    }
-
-    // WILL BE CALLED WHEN GAME IS OVER
+    // Will be called when game is over.
     function gameOver(interval) {
         clearInterval(interval)
 
@@ -116,11 +121,10 @@ $(function () {
                 <strong style="color: black;">${_successRate}%</strong>
             `)
 
-
         saveGameData(username, correctCount, incorrectCount, _successRate)
     }
 
-    // CALCULATING SUCCESS PERCENTAGE
+    // Calculating success percentage.
     function calculateSuccessPercentage(correct, incorrect) {
         // i had to do it step by step otherwise it was not working
         if (correct === 0) return 0
@@ -132,7 +136,7 @@ $(function () {
         }
     }
 
-    // UPDATING THE CORRESPONDING USER INFO VIA AJAX CALL
+    // Saving the corresponding user game info to db via ajax. 
     function saveGameData(username, correct, incorrect, percentage) {
         $.ajax({
             method: 'POST',
@@ -145,7 +149,7 @@ $(function () {
         })
     }
 
-    // WILL BE CALLED WHEN PLAY AGAIN IS CLICKED
+    // Will be called when play again is clicked.
     function playAgain() {
         // resetting everything
         timeLeft = 60
@@ -155,6 +159,7 @@ $(function () {
         currentWordIndex = 0
         gameOverContainer.css('display', 'none')
         gameOverMsg.css('display', 'none')
+        wordInput.text('')
         wordInput.css('display', 'block')
         wordInput.next('span').css('display', 'inline-block')
         instructions.css('display', 'block')
@@ -163,15 +168,15 @@ $(function () {
         wordInput.one('keyup', startTimer)
     }
 
-    // NAVIGATING TO LEADERBOARD
+    // Navigating to leaderboard.
     const navigateToLeaderboard = () => location.href = '/play/leaderboard'
 
     // ==== EVENTS ====
 
-    // THIS EVENT IS HAPPENING ONLY ONCE BECAUSE WE NEED IT ONCE TO START THE TIMER
+    // This event is happening only once because we need it only one time in order to start the timer.
     wordInput.one('keyup', startTimer)
 
-    // ACTUAL KEYUP EVENT
+    // Actual keyup event.
     wordInput.on('keyup', e => {
         // for android phones, i had to detect the pressed key in a different way
         const androidKey = e.target.value.charAt(e.target.selectionStart - 1).charCodeAt()

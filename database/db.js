@@ -3,12 +3,12 @@ const { Sequelize, DataTypes, Model } = require('sequelize')
 require('dotenv').config()
 
 // function to find the best game through all games of every user
-Array.prototype.hasMost = function (attr, attr2) {
+Array.prototype.theBestPerformance = function (attr, attr2) {
     return (this.length && this.reduce((acc, curr) => {
         acc[attr] = acc[attr] || 0
         acc[attr2] = acc[attr2] || 0
 
-        if (curr[attr] + (curr[attr2] / 10) >= acc[attr] + (acc[attr2] / 10)) {
+        if (curr[attr] + (curr[attr2] / 2) >= acc[attr] + (acc[attr2] / 2)) {
             acc = { ...curr }
         }
 
@@ -213,7 +213,7 @@ class MySQL {
                         })
 
                         // here we are finding the best performance of the current user and pushing it to the best games
-                        const bestGame = filteredGameStats.hasMost('correct', 'percentage')
+                        const bestGame = filteredGameStats.theBestPerformance('correct', 'percentage')
                         usersBestGames.push(bestGame)
                     }
                 }
@@ -237,8 +237,8 @@ class MySQL {
      * @returns 1, 0 or -1 according to comparison result
      */
     sortUsersGames(a, b) {
-        const totalScoreA = a.correct + (a.percentage / 10)
-        const totalScoreB = b.correct + (b.percentage / 10)
+        const totalScoreA = a.correct + (a.percentage / 3)
+        const totalScoreB = b.correct + (b.percentage / 3)
 
         if (totalScoreA < totalScoreB) {
             return 1

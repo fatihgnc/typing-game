@@ -40,7 +40,9 @@ $(function () {
 
     // ajax call to /user/add
     function addUser(statusMsgElem) {
+        
         const $username = $inputUsername.val()
+
         if($username.length < 3 || $username.length > 15) {
             statusMsgElem.text('kullanıcı adı 3-15 karaktere sahip olabilir!')
             statusMsgElem.css({
@@ -92,7 +94,9 @@ $(function () {
 
     $registrationSubmitButton.on('click', e => {
         e.preventDefault()
+        
         addUser($registrationStatusMessageElem)
+        
         if ($registrationStatusMessageElem.text()) {
             setTimeout(() => $registrationStatusMessageElem.css('display', 'none'), 3000)
         }
