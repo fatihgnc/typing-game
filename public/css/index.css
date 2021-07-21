@@ -1,0 +1,196 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;800&display=swap");
+*,
+*::before,
+*::after {
+  font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: white;
+}
+
+body {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  background-color: #242424;
+}
+
+.redirect-msg {
+  text-align: center;
+  font-weight: 600;
+  font-size: 19.2px;
+  letter-spacing: 2px;
+  padding-bottom: 2px;
+  color: #d6855c;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 600px) {
+  .redirect-msg {
+    font-size: 16px;
+  }
+}
+.container {
+  display: flex;
+  align-items: initial;
+  justify-content: initial;
+  flex-direction: column;
+  gap: 3rem;
+  width: 100%;
+}
+.container .cta-header {
+  font-size: 64px;
+  font-weight: 400;
+  letter-spacing: 3px;
+  text-align: center;
+}
+.container .cta-header::after {
+  content: "|";
+  animation: blink 500ms linear infinite alternate;
+}
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.container .cta-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: initial;
+  gap: 0rem;
+  position: relative;
+  width: 15%;
+  margin: 0 auto;
+  padding: 25px 15px;
+  background: none;
+  border: none;
+  letter-spacing: 1.5px;
+  font-size: 20.8px;
+  font-weight: 300;
+  cursor: pointer;
+  box-shadow: 0px 0px 1px white;
+  transition: all 0.2s ease;
+}
+.container .cta-btn .cta-btn__play-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: initial;
+  gap: 0rem;
+  margin-right: 1rem;
+}
+.container .cta-btn .cta-btn__play-icon svg {
+  fill: white;
+}
+@media screen and (max-width: 1450px) {
+  .container .cta-btn {
+    width: 25%;
+  }
+}
+@media screen and (max-width: 1200px) {
+  .container .cta-header {
+    font-size: 48px;
+  }
+}
+@media screen and (max-width: 750px) {
+  .container .cta-header {
+    font-size: 24px;
+  }
+  .container .cta-btn {
+    padding: 12px;
+    width: 60%;
+    font-size: 17.6px;
+  }
+}
+@media screen and (max-width: 500px) {
+  .container .cta-header {
+    font-size: 20.8px;
+  }
+  .container .cta-btn {
+    padding: 8px;
+    width: 60%;
+    font-size: 16px;
+  }
+}
+.container .registration {
+  margin: 0 auto;
+  padding: 0 25px;
+  display: none;
+  text-align: center;
+  transition: all 0.5s ease;
+}
+.container .registration #registration__username,
+.container .registration #registration__submit {
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+.container .registration #registration__username {
+  outline: none;
+  color: #242424;
+}
+.container .registration #registration__submit {
+  background: gray;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+.container .registration #registration__submit:hover {
+  background: #545454;
+}
+.container .registration .registration__status-msg {
+  display: none;
+  max-width: 330px;
+  margin-top: 16px;
+  padding: 16px;
+  transition: opacity 0.2s ease-in-out;
+}
+
+@media screen and (max-width: 750px) {
+  .registration .registration__status-msg {
+    max-width: 210px;
+    text-align: center;
+    margin: 8px auto 0;
+  }
+
+  .registration #registration__submit {
+    margin-top: 8px;
+    width: 100%;
+    max-width: 210px;
+  }
+}
+@media screen and (max-width: 500px) {
+  .registration .registration__status-msg,
+.registration #registration__username {
+    max-width: 210px !important;
+  }
+
+  .registration #registration__submit,
+.registration #registration__username {
+    padding: 8px !important;
+  }
+
+  .container {
+    gap: 28.8px;
+  }
+
+  ::placeholder {
+    font-size: 14.4px;
+  }
+}
+@keyframes blinkTextCursor {
+  from {
+    border-right-color: rgba(0, 0, 0, 0.75);
+  }
+  to {
+    border-right-color: transparent;
+  }
+}
+
+/*# sourceMappingURL=index.css.map */
