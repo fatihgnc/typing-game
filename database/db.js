@@ -271,7 +271,7 @@ class MySQL {
 function calculateScore(currentGame, bestGame) {
     // Coefficients for score calculation
     const CORRECT_COEFFICIENT = 0.5
-    const INCORRECT_COEFFICIENT = 0.125
+    const INCORRECT_COEFFICIENT = 0.15
     const PERCENTAGE_COEFFICIENT = 0.33
 
     const currCorrectContribution = currentGame.correct * CORRECT_COEFFICIENT
