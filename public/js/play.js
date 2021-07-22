@@ -41,7 +41,7 @@ $(function () {
         $.ajax({
             url: '/getWords',
             success: (data, status, jqxhr) => {
-                wordsToFetch = data.filter(piece => piece.length <= 7)
+                wordsToFetch = data.filter(piece => piece.length <= 10 && piece.length >= 3)
             },
             error: (jqxhr, status, err) => {
                 alert(jqxhr.responseText)

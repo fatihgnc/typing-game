@@ -3,9 +3,9 @@
 
 // ========CONTAINER=========
 .container {
-    @include flex(flex, center, center, column, 1.5rem);
+    @include flex(flex, center, space-evenly, column, 24px);
     width: 100% !important;
-    padding: 5rem 2rem;
+    padding: 100px 12px;
     background: rgba(255, 255, 255, .20);
     box-shadow:
         0 2.8px 2.2px rgba(255, 255, 255, 0.034),
@@ -26,14 +26,14 @@
         height: 75px;
         border: thin solid #fff;
         border-radius: 50%;
-        font-size: 1.2rem;
+        font-size: 19.2px;
     }
 
     .target-words {
-        padding: 1rem;
+        padding: 16px;
         width: max-content;
         word-spacing: 5px;
-        font-size: 1.2rem;
+        font-size: 19.2px;
         font-weight: 200;
     }
 
@@ -98,6 +98,10 @@
         display: none;
         transition: display .2s;
 
+        .game-over__success-rate {
+            margin-bottom: 16px;
+        }
+
         .game-over__buttons {
             display: flex;
 
@@ -115,6 +119,12 @@
                     color: white;
                 }
             }
+
+            @media screen and (max-width: 450px) {
+                .play-again {
+                    margin-bottom: 16px;
+                }
+            } 
         }
     }
 

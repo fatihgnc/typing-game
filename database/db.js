@@ -261,11 +261,6 @@ class MySQL {
     }
 }
 
-// Coefficients for score calculation
-const CORRECT_COEFFICIENT = 0.5
-const INCORRECT_COEFFICIENT = 0.125
-const PERCENTAGE_COEFFICIENT = 0.25
-
 /**
  * Calculates total scores of given games.
  * 
@@ -274,6 +269,11 @@ const PERCENTAGE_COEFFICIENT = 0.25
  * @returns the total calculated score of both current and best game.
  */
 function calculateScore(currentGame, bestGame) {
+    // Coefficients for score calculation
+    const CORRECT_COEFFICIENT = 0.5
+    const INCORRECT_COEFFICIENT = 0.125
+    const PERCENTAGE_COEFFICIENT = 0.33
+
     const currCorrectContribution = currentGame.correct * CORRECT_COEFFICIENT
     const currIncorrectContribution = currentGame.incorrect * INCORRECT_COEFFICIENT
     const currPercentageContribution = currentGame.percentage * PERCENTAGE_COEFFICIENT

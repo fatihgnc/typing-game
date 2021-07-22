@@ -21,11 +21,11 @@ body {
 .container {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 24px;
   width: 100% !important;
-  padding: 5rem 2rem;
+  padding: 100px 12px;
   background: rgba(255, 255, 255, 0.2);
   box-shadow: 0 2.8px 2.2px rgba(255, 255, 255, 0.034), 0 6.7px 5.3px rgba(255, 255, 255, 0.048), 0 12.5px 10px rgba(255, 255, 255, 0.06), 0 22.3px 17.9px rgba(255, 255, 255, 0.072), 0 41.8px 33.4px rgba(255, 255, 255, 0.086), 0 100px 80px rgba(255, 255, 255, 0.12);
 }
@@ -43,13 +43,13 @@ body {
   height: 75px;
   border: thin solid #fff;
   border-radius: 50%;
-  font-size: 1.2rem;
+  font-size: 19.2px;
 }
 .container .target-words {
-  padding: 1rem;
+  padding: 16px;
   width: max-content;
   word-spacing: 5px;
-  font-size: 1.2rem;
+  font-size: 19.2px;
   font-weight: 200;
 }
 .container #wordInput {
@@ -107,6 +107,9 @@ body {
   display: none;
   transition: display 0.2s;
 }
+.container .game-over-container .game-over__success-rate {
+  margin-bottom: 16px;
+}
 .container .game-over-container .game-over__buttons {
   display: flex;
 }
@@ -123,6 +126,11 @@ body {
 .container .game-over-container .game-over__buttons .play-again:hover {
   background-color: #848484;
   color: white;
+}
+@media screen and (max-width: 450px) {
+  .container .game-over-container .game-over__buttons .play-again {
+    margin-bottom: 16px;
+  }
 }
 
 .current-target {
