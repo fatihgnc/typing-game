@@ -75,7 +75,7 @@ $(function () {
         const timeInterval = setInterval(() => {
             timer.text(--timeLeft)
             checkTimer(timeInterval, timeLeft)
-        }, 100)
+        }, 1000)
     }
 
     // Checking the timer, if it's over we call game over function.
