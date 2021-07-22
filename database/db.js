@@ -3,16 +3,26 @@ const { Sequelize, DataTypes, Model } = require('sequelize')
 require('dotenv').config()
 
 // function to find the best game through all games of every user
-Array.prototype.theBestPerformance = function (attr, attr2) {
-    return (this.length && this.reduce((acc, curr) => {
-        acc[attr] = acc[attr] || 0
-        acc[attr2] = acc[attr2] || 0
+Array.prototype.theBestPerformance = function (correct, incorrect, percentage) {
+    return (this.length && this.reduce((best, current) => {
 
-        if (curr[attr] + (curr[attr2] / 2) >= acc[attr] + (acc[attr2] / 2)) {
-            acc = { ...curr }
+        best[correct] = best[correct] || 0
+        best[incorrect] = best[incorrect] || 0
+        best[percentage] = best[percentage] || 0
+
+        const { currentTotal, bestTotal } = calculateScore(current, best)
+
+        // if total score of the current game is below 0 in the first iteration, 
+        // i have to assign the current to the best game because best game's stats are all 0 at first.
+        if (currentTotal < 0 && !best) {
+            best = { ...current }
+        } else {
+            if (currentTotal >= bestTotal) {
+                best = { ...current }
+            }
         }
 
-        return acc
+        return best
     }, {}))
 }
 
@@ -213,14 +223,14 @@ class MySQL {
                         })
 
                         // here we are finding the best performance of the current user and pushing it to the best games
-                        const bestGame = filteredGameStats.theBestPerformance('correct', 'percentage')
+                        const bestGame = filteredGameStats.theBestPerformance('correct', 'incorrect', 'percentage')
                         usersBestGames.push(bestGame)
                     }
                 }
                 usersBestGames.sort(this.sortUsersGames)
                 // console.log(usersBestGames)
                 return usersBestGames
-            } 
+            }
 
             return null
 
@@ -236,19 +246,48 @@ class MySQL {
      * @param {*} b second game
      * @returns 1, 0 or -1 according to comparison result
      */
-    sortUsersGames(a, b) {
-        const totalScoreA = a.correct + (a.percentage / 3)
-        const totalScoreB = b.correct + (b.percentage / 3)
+    sortUsersGames(current, best) {
+        const { currentTotal, bestTotal } = calculateScore(current, best)
 
-        if (totalScoreA < totalScoreB) {
+        if (currentTotal < bestTotal) {
             return 1
         }
 
-        if (totalScoreB < totalScoreA) {
+        if (bestTotal < currentTotal) {
             return -1
         }
 
         return 0
+    }
+}
+
+// Coefficients for score calculation
+const CORRECT_COEFFICIENT = 0.75
+const INCORRECT_COEFFICIENT = 0.125
+const PERCENTAGE_COEFFICIENT = 0.25
+
+/**
+ * Calculates total scores of given games.
+ * 
+ * @param {*} currentGame current game stats
+ * @param {*} bestGame best game stats
+ * @returns the total calculated score of both current and best game.
+ */
+function calculateScore(currentGame, bestGame) {
+    const currCorrectContribution = currentGame.correct * CORRECT_COEFFICIENT
+    const currIncorrectContribution = currentGame.incorrect * INCORRECT_COEFFICIENT
+    const currPercentageContribution = currentGame.percentage * PERCENTAGE_COEFFICIENT
+
+    const bestCorrectContribution = bestGame.correct * CORRECT_COEFFICIENT
+    const bestIncorrectContribution = bestGame.incorrect * INCORRECT_COEFFICIENT
+    const bestPercentageContribution = bestGame.percentage * PERCENTAGE_COEFFICIENT
+
+    const currentTotal = currCorrectContribution + currPercentageContribution - currIncorrectContribution
+    const bestTotal = bestCorrectContribution + bestPercentageContribution - bestIncorrectContribution
+
+    return {
+        currentTotal,
+        bestTotal
     }
 }
 

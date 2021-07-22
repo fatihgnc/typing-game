@@ -75,7 +75,7 @@ $(function () {
         const timeInterval = setInterval(() => {
             timer.text(--timeLeft)
             checkTimer(timeInterval, timeLeft)
-        }, 1000)
+        }, 100)
     }
 
     // Checking the timer, if it's over we call game over function.
@@ -114,12 +114,15 @@ $(function () {
         gameOverContainer.css('display', 'flex')
 
         const _successRate = calculateSuccessPercentage(correctCount, incorrectCount)
-        successRate.append(`
+        successRate.append(
+            `
                 doğru sayınız: 
-                <strong style="color: black;">${correctCount}/${correctCount + incorrectCount}</strong> , 
-                ki bu da: 
-                <strong style="color: black;">${_successRate}%</strong>
-            `)
+                <span style="color: hsl(20, 75%, 60%);">${correctCount}/${correctCount + incorrectCount}</span>
+                <br> 
+                yüzdesel olarak: 
+                <span style="color: hsl(20, 75%, 60%);">${_successRate}%</span>
+            `
+        )
 
         saveGameData(username, correctCount, incorrectCount, _successRate)
     }
