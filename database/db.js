@@ -262,7 +262,7 @@ class MySQL {
 }
 
 // Coefficients for score calculation
-const CORRECT_COEFFICIENT = 0.75
+const CORRECT_COEFFICIENT = 0.5
 const INCORRECT_COEFFICIENT = 0.125
 const PERCENTAGE_COEFFICIENT = 0.25
 
