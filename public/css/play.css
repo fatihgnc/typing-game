@@ -51,6 +51,7 @@ body {
   word-spacing: 5px;
   font-size: 19.2px;
   font-weight: 200;
+  user-select: none;
 }
 .container #wordInput {
   color: black;
