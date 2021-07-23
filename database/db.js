@@ -3,7 +3,7 @@ const { Sequelize, DataTypes, Model } = require('sequelize')
 require('dotenv').config()
 
 // function to find the best game through all games of every user
-Array.prototype.theBestPerformance = function (correct, incorrect, percentage) {
+Array.prototype.getTheBestPerformance = function (correct, incorrect, percentage) {
     return (this.length && this.reduce((best, current) => {
 
         best[correct] = best[correct] || 0
@@ -223,7 +223,7 @@ class MySQL {
                         })
 
                         // here we are finding the best performance of the current user and pushing it to the best games
-                        const bestGame = filteredGameStats.theBestPerformance('correct', 'incorrect', 'percentage')
+                        const bestGame = filteredGameStats.getTheBestPerformance('correct', 'incorrect', 'percentage')
                         usersBestGames.push(bestGame)
                     }
                 }
