@@ -3,12 +3,11 @@ const { Sequelize, DataTypes, Model } = require('sequelize')
 require('dotenv').config()
 
 // function to find the best game through all games of every user
-Array.prototype.theBestPerformance = function (correct, incorrect, percentage) {
+Array.prototype.theBestPerformance = function (correct, incorrect) {
     return (this.length && this.reduce((best, current) => {
 
         best[correct] = best[correct] || 0
         best[incorrect] = best[incorrect] || 0
-        best[percentage] = best[percentage] || 0
 
         const { currentTotal, bestTotal } = calculateScore(current, best)
 
@@ -223,7 +222,7 @@ class MySQL {
                         })
 
                         // here we are finding the best performance of the current user and pushing it to the best games
-                        const bestGame = filteredGameStats.theBestPerformance('correct', 'incorrect', 'percentage')
+                        const bestGame = filteredGameStats.theBestPerformance('correct', 'incorrect')
                         usersBestGames.push(bestGame)
                     }
                 }
@@ -271,19 +270,16 @@ class MySQL {
 function calculateScore(currentGame, bestGame) {
     // Coefficients for score calculation
     const CORRECT_COEFFICIENT = 0.5
-    const INCORRECT_COEFFICIENT = 0.15
-    const PERCENTAGE_COEFFICIENT = 0.33
+    const INCORRECT_COEFFICIENT = 0.125
 
     const currCorrectContribution = currentGame.correct * CORRECT_COEFFICIENT
     const currIncorrectContribution = currentGame.incorrect * INCORRECT_COEFFICIENT
-    const currPercentageContribution = currentGame.percentage * PERCENTAGE_COEFFICIENT
 
     const bestCorrectContribution = bestGame.correct * CORRECT_COEFFICIENT
     const bestIncorrectContribution = bestGame.incorrect * INCORRECT_COEFFICIENT
-    const bestPercentageContribution = bestGame.percentage * PERCENTAGE_COEFFICIENT
 
-    const currentTotal = currCorrectContribution + currPercentageContribution - currIncorrectContribution
-    const bestTotal = bestCorrectContribution + bestPercentageContribution - bestIncorrectContribution
+    const currentTotal = currCorrectContribution  - currIncorrectContribution
+    const bestTotal = bestCorrectContribution  - bestIncorrectContribution
 
     return {
         currentTotal,
